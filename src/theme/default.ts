@@ -8,8 +8,8 @@ export const DefaultTheme = createTheme({
     },
     secondary: {
       main: "#133A6F",
+      light: "rgba(19, 58, 111, 0.8)",
     },
-
     text: {
       primary: "#4D4D4D",
       secondary: "#AFAFAF",

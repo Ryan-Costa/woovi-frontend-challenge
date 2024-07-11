@@ -1,21 +1,34 @@
-import { Box, Radio, Typography, useTheme } from "@mui/material";
+import { useEffect, useState } from "react";
 import Stack from "@mui/material/Stack";
-import wooviLogo from "../assets/woovi.svg";
+import { Box, Radio, Typography, useTheme } from "@mui/material";
 import CheckCircleIcon from "@mui/icons-material/CheckCircle";
-import { useState } from "react";
+
 import { Tag } from "../components/tag";
-import GppGoodOutlinedIcon from "@mui/icons-material/GppGoodOutlined";
-import WooviFooterLogo from "../assets/woovi-footer-logo.svg";
+import { ConfirmationModal } from "../components/confirmation-modal";
+import { formatCurrency } from "../helper/format-currency";
+import { Header } from "../components/header";
 
 export default function PaymentMethod() {
   const [selectedInstallment, setSelectedInstallment] = useState<number>(0);
+  const [isConfirmationModalOpen, setIsConfirmationModalOpen] = useState(false);
+  const [amountSelected, setAmountSelected] = useState<number>(0);
+
+  useEffect(() => {
+    if (isConfirmationModalOpen) {
+      document.body.style.overflow = "hidden";
+    } else {
+      document.body.style.overflow = "auto";
+    }
+  }, [isConfirmationModalOpen]);
 
   const handleRadioChange = (
     numInstallments: number,
     amountSelected: number
   ) => {
     setSelectedInstallment(numInstallments);
-    console.log(selectedInstallment, amountSelected);
+    setAmountSelected(amountSelected);
+
+    openConfirmationModal();
   };
 
   const theme = useTheme();
@@ -42,31 +55,17 @@ export default function PaymentMethod() {
     };
   });
 
+  const openConfirmationModal = () => {
+    setIsConfirmationModalOpen(true);
+  };
+
   return (
     <Stack
       sx={{
-        alignItems: "center",
         flex: 1,
       }}
     >
-      <img
-        src={wooviLogo}
-        style={{ width: "12.35rem", height: "3.7rem", flexShrink: 0 }}
-        alt="Woovi Logo"
-      />
-      <Typography
-        variant="h1"
-        color="text.primary"
-        sx={{
-          mt: 5,
-          mb: 4,
-          textAlign: "center",
-          lineHeight: "normal",
-        }}
-      >
-        João, como você quer pagar?
-      </Typography>
-
+      <Header title="João, como você quer pagar?" />
       <Box
         sx={{
           display: "flex",
@@ -105,6 +104,7 @@ export default function PaymentMethod() {
             Pix
           </Typography>
         </Box>
+
         <Box
           sx={{
             display: "flex",
@@ -132,10 +132,7 @@ export default function PaymentMethod() {
                   fontWeight: 600,
                 }}
               >
-                {totalAmount.toLocaleString("pt-br", {
-                  style: "currency",
-                  currency: "BRL",
-                })}
+                {formatCurrency(totalAmount)}
               </Typography>
             </Box>
 
@@ -193,6 +190,7 @@ export default function PaymentMethod() {
 
         <Tag textBold="🤑 R$ 300,00" text="de volta no seu Pix na hora" />
       </Box>
+
       <Stack
         sx={{
           width: "100%",
@@ -209,7 +207,7 @@ export default function PaymentMethod() {
               alignItems: "start",
               gap: "0.7rem",
               zIndex:
-                selectedInstallment === installment.numInstallments ? 10 : 1,
+                selectedInstallment === installment.numInstallments ? 2 : 1,
               borderTopLeftRadius: index === 0 ? 8 : 0,
               borderTopRightRadius: index === 0 ? 8 : 0,
               borderBottomLeftRadius: index === installments.length - 1 ? 8 : 0,
@@ -258,11 +256,7 @@ export default function PaymentMethod() {
                 flex: 1,
               }}
             >
-              <Box
-                sx={{
-                  flex: 1,
-                }}
-              >
+              <Box>
                 <Box
                   sx={{
                     display: "flex",
@@ -279,12 +273,10 @@ export default function PaymentMethod() {
                       fontWeight: 600,
                     }}
                   >
-                    {installment.amount.toLocaleString("pt-br", {
-                      style: "currency",
-                      currency: "BRL",
-                    })}
+                    {formatCurrency(installment.amount)}
                   </Typography>
                 </Box>
+
                 <Box
                   sx={{
                     display: "flex",
@@ -292,15 +284,14 @@ export default function PaymentMethod() {
                   }}
                 >
                   <Typography variant="h3" color="text.secondary">
-                    {`Total: ${(
+                    Total:{" "}
+                    {formatCurrency(
                       installment.numInstallments * installment.amount
-                    ).toLocaleString("pt-BR", {
-                      style: "currency",
-                      currency: "BRL",
-                    })}`}
+                    )}
                   </Typography>
                 </Box>
               </Box>
+
               <Radio
                 checked={selectedInstallment === installment.numInstallments}
                 onChange={() =>
@@ -319,41 +310,24 @@ export default function PaymentMethod() {
                 }}
               />
             </Box>
+
             {index === 2 && (
-              <>
-                <Tag
-                  textBold="-3% de juros:"
-                  text="Melhor opção de parcelamento"
-                />
-              </>
+              <Tag
+                textBold="-3% de juros:"
+                text="Melhor opção de parcelamento"
+              />
             )}
           </Box>
         ))}
       </Stack>
-      <Box
-        sx={{
-          display: "flex",
-          alignItems: "center",
-          justifyContent: "center",
-          gap: "0.4rem",
-          mt: 5,
-        }}
-      >
-        <GppGoodOutlinedIcon
-          sx={{
-            color: theme.palette.text.disabled,
-            fontSize: 22,
-          }}
+
+      {isConfirmationModalOpen && (
+        <ConfirmationModal
+          selectedInstallment={selectedInstallment}
+          amountSelected={amountSelected}
+          setIsConfirmationModalOpen={setIsConfirmationModalOpen}
         />
-        <Typography
-          color={theme.palette.text.disabled}
-          variant="h4"
-          sx={{ lineHeight: "0.8", fontWeight: 600 }}
-        >
-          Pagamento 100% seguro via:
-        </Typography>
-        <img src={WooviFooterLogo} alt="WooviFooterLogo" />
-      </Box>
+      )}
     </Stack>
   );
 }

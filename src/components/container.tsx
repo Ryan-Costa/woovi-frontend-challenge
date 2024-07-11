@@ -1,4 +1,5 @@
 import { Stack } from "@mui/material";
+import { MessageSecurityPayment } from "./message-security-payment";
 
 interface ContainerProps {
   children: React.ReactNode;
@@ -12,6 +13,7 @@ export function Container({ children }: ContainerProps) {
       }}
     >
       {children}
+      <MessageSecurityPayment />
     </Stack>
   );
 }
