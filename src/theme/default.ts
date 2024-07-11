@@ -13,7 +13,7 @@ export const DefaultTheme = createTheme({
     text: {
       primary: "#4D4D4D",
       secondary: "#AFAFAF",
-      disabled: "#03D69D",
+      disabled: "#E5E5E5",
     },
     common: {
       black: "#000000",
@@ -22,6 +22,9 @@ export const DefaultTheme = createTheme({
     background: {
       default: "#FFFFFF",
       paper: "#F4FBF9",
+    },
+    info: {
+      main: "#B2B2B2",
     },
   },
   typography: {

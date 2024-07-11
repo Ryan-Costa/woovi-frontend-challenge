@@ -16,12 +16,12 @@ export function MessageSecurityPayment() {
     >
       <GppGoodOutlinedIcon
         sx={{
-          color: theme.palette.text.disabled,
+          color: theme.palette.primary.main,
           fontSize: 22,
         }}
       />
       <Typography
-        color={theme.palette.text.disabled}
+        color={theme.palette.primary.main}
         variant="h4"
         sx={{ lineHeight: "0.8", fontWeight: 600 }}
       >

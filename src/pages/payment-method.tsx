@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import Stack from "@mui/material/Stack";
 import { Box, Radio, Typography, useTheme } from "@mui/material";
 import CheckCircleIcon from "@mui/icons-material/CheckCircle";
@@ -7,11 +7,17 @@ import { Tag } from "../components/tag";
 import { ConfirmationModal } from "../components/confirmation-modal";
 import { formatCurrency } from "../helper/format-currency";
 import { Header } from "../components/header";
+import { InstallmentWrapper } from "../components/installment-wrapper";
+import { AmountContext } from "../context/amount-provider";
 
 export default function PaymentMethod() {
-  const [selectedInstallment, setSelectedInstallment] = useState<number>(0);
   const [isConfirmationModalOpen, setIsConfirmationModalOpen] = useState(false);
-  const [amountSelected, setAmountSelected] = useState<number>(0);
+  const {
+    selectedAmount,
+    updateAmount,
+    selectedInstallment,
+    updateInstallment,
+  } = useContext(AmountContext);
 
   useEffect(() => {
     if (isConfirmationModalOpen) {
@@ -23,11 +29,10 @@ export default function PaymentMethod() {
 
   const handleRadioChange = (
     numInstallments: number,
-    amountSelected: number
+    selectedAmount: number
   ) => {
-    setSelectedInstallment(numInstallments);
-    setAmountSelected(amountSelected);
-
+    updateInstallment(numInstallments);
+    updateAmount(selectedAmount);
     openConfirmationModal();
   };
 
@@ -66,27 +71,24 @@ export default function PaymentMethod() {
       }}
     >
       <Header title="João, como você quer pagar?" />
-      <Box
+
+      <Stack
         sx={{
-          display: "flex",
-          flexDirection: "column",
           gap: "0.7rem",
           position: "relative",
           border: 2,
-          borderColor:
-            selectedInstallment === 1
-              ? theme.palette.text.disabled
-              : theme.palette.primary.light,
           borderRadius: 2,
-          backgroundColor:
-            selectedInstallment === 1
-              ? theme.palette.background.paper
-              : theme.palette.common.white,
+          borderColor: theme.palette.text.disabled,
+          backgroundColor: theme.palette.common.white,
           width: "100%",
           px: "2rem",
           pt: "2rem",
           pb: "2.3rem",
           mb: "3.4rem",
+          ...(selectedInstallment === 1 && {
+            borderColor: theme.palette.primary.main,
+            backgroundColor: theme.palette.background.paper,
+          }),
         }}
       >
         <Box
@@ -97,7 +99,7 @@ export default function PaymentMethod() {
             display: "inline-block",
             transform: "translateY(-3.5rem)",
             borderRadius: 10,
-            backgroundColor: theme.palette.primary.light,
+            backgroundColor: theme.palette.text.disabled,
           }}
         >
           <Typography variant="h2" color="text.primary">
@@ -144,7 +146,7 @@ export default function PaymentMethod() {
             >
               <Typography
                 variant="h3"
-                color="text.disabled"
+                color="primary.main"
                 sx={{
                   fontWeight: 600,
                 }}
@@ -153,7 +155,7 @@ export default function PaymentMethod() {
               </Typography>
               <Typography
                 variant="h3"
-                color="text.disabled"
+                color="primary.main"
                 sx={{
                   fontWeight: 800,
                 }}
@@ -162,7 +164,7 @@ export default function PaymentMethod() {
               </Typography>
               <Typography
                 variant="h3"
-                color="text.disabled"
+                color="primary.main"
                 sx={{
                   fontWeight: 600,
                 }}
@@ -176,11 +178,11 @@ export default function PaymentMethod() {
             checked={selectedInstallment === 1}
             onChange={() => handleRadioChange(1, totalAmount)}
             checkedIcon={
-              <CheckCircleIcon sx={{ color: theme.palette.text.disabled }} />
+              <CheckCircleIcon sx={{ color: theme.palette.primary.main }} />
             }
             sx={{
               "& .MuiSvgIcon-root": {
-                color: theme.palette.text.disabled,
+                color: theme.palette.primary.main,
                 fontSize: 28,
               },
               padding: 0,
@@ -189,7 +191,7 @@ export default function PaymentMethod() {
         </Box>
 
         <Tag textBold="🤑 R$ 300,00" text="de volta no seu Pix na hora" />
-      </Box>
+      </Stack>
 
       <Stack
         sx={{
@@ -198,37 +200,11 @@ export default function PaymentMethod() {
         }}
       >
         {installments.map((installment, index) => (
-          <Box
+          <InstallmentWrapper
             key={index}
-            sx={{
-              position: "relative",
-              display: "flex",
-              flexDirection: "column",
-              alignItems: "start",
-              gap: "0.7rem",
-              zIndex:
-                selectedInstallment === installment.numInstallments ? 2 : 1,
-              borderTopLeftRadius: index === 0 ? 8 : 0,
-              borderTopRightRadius: index === 0 ? 8 : 0,
-              borderBottomLeftRadius: index === installments.length - 1 ? 8 : 0,
-              borderBottomRightRadius:
-                index === installments.length - 1 ? 8 : 0,
-              border: 2,
-              borderColor:
-                selectedInstallment === installment.numInstallments
-                  ? theme.palette.text.disabled
-                  : theme.palette.primary.light,
-              backgroundColor:
-                selectedInstallment === installment.numInstallments
-                  ? theme.palette.background.paper
-                  : theme.palette.common.white,
-              width: "100%",
-              px: "2rem",
-              pt: "2rem",
-              pb: "2.3rem",
-              height: "100%",
-              mb: index === installments.length - 1 ? 0 : "-2px",
-            }}
+            index={index}
+            selectedInstallment={selectedInstallment}
+            installmentLength={installments.length}
           >
             {index === 0 && (
               <Box
@@ -239,7 +215,7 @@ export default function PaymentMethod() {
                   display: "inline-block",
                   transform: "translateY(-3.5rem)",
                   borderRadius: 10,
-                  backgroundColor: theme.palette.primary.light,
+                  backgroundColor: theme.palette.text.disabled,
                 }}
               >
                 <Typography variant="h2" color="text.primary">
@@ -266,6 +242,7 @@ export default function PaymentMethod() {
                   <Typography variant="h1" color="text.primary">
                     {installment.numInstallments}x
                   </Typography>
+
                   <Typography
                     variant="h1"
                     color="text.primary"
@@ -304,7 +281,7 @@ export default function PaymentMethod() {
                 sx={{
                   "& .MuiSvgIcon-root": {
                     fontSize: 28,
-                    color: theme.palette.text.disabled,
+                    color: theme.palette.primary.main,
                   },
                   padding: 0,
                 }}
@@ -317,14 +294,14 @@ export default function PaymentMethod() {
                 text="Melhor opção de parcelamento"
               />
             )}
-          </Box>
+          </InstallmentWrapper>
         ))}
       </Stack>
 
       {isConfirmationModalOpen && (
         <ConfirmationModal
           selectedInstallment={selectedInstallment}
-          amountSelected={amountSelected}
+          selectedAmount={selectedAmount}
           setIsConfirmationModalOpen={setIsConfirmationModalOpen}
         />
       )}

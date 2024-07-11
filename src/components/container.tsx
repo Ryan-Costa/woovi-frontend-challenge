@@ -1,10 +1,8 @@
 import { Stack } from "@mui/material";
 import { MessageSecurityPayment } from "./message-security-payment";
+import { Outlet } from "react-router-dom";
 
-interface ContainerProps {
-  children: React.ReactNode;
-}
-export function Container({ children }: ContainerProps) {
+export function Container() {
   return (
     <Stack
       sx={{
@@ -12,7 +10,7 @@ export function Container({ children }: ContainerProps) {
         px: 2,
       }}
     >
-      {children}
+      <Outlet />
       <MessageSecurityPayment />
     </Stack>
   );

@@ -1,17 +1,19 @@
 import { Box, Button, Typography, useTheme } from "@mui/material";
 import { formatCurrency } from "../helper/format-currency";
+import { useNavigate } from "react-router-dom";
 
 interface ConfirmationModalProps {
   selectedInstallment: number;
-  amountSelected: number;
+  selectedAmount: number;
   setIsConfirmationModalOpen: React.Dispatch<React.SetStateAction<boolean>>;
 }
 export function ConfirmationModal({
   selectedInstallment,
-  amountSelected,
+  selectedAmount,
   setIsConfirmationModalOpen,
 }: ConfirmationModalProps) {
   const theme = useTheme();
+  const navigate = useNavigate();
 
   function closeModal() {
     setIsConfirmationModalOpen(false);
@@ -61,7 +63,7 @@ export function ConfirmationModal({
           </Typography>
 
           <Typography variant="h2" sx={{ fontWeight: 800 }}>
-            {formatCurrency(amountSelected)}?
+            {formatCurrency(selectedAmount)}?
           </Typography>
         </Box>
         <Box
@@ -84,6 +86,7 @@ export function ConfirmationModal({
             Cancelar
           </Button>
           <Button
+            onClick={() => navigate("/pix")}
             variant="contained"
             size="large"
             sx={{
