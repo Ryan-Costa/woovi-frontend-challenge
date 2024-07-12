@@ -9,7 +9,7 @@ import {
 } from "@mui/material";
 import { useState } from "react";
 
-export function HowWorks() {
+export function HowItWorks() {
   const theme = useTheme();
   const [expandedSessionHowWorkds, setExpandedSessionHowWorkds] =
     useState(false);

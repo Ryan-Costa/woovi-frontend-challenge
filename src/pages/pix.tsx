@@ -11,7 +11,7 @@ import { Divider } from "@mui/material";
 import { PaymentTermTime } from "../components/payment-term-time";
 import { TimeLinePayment } from "../components/timeline-payment";
 import { TotalAmount } from "../components/total-amount";
-import { HowWorks } from "../components/how-works";
+import { HowItWorks } from "../components/how-it-works";
 import { IdentifierMessage } from "../components/identifier-message";
 
 export default function Pix() {
@@ -48,7 +48,7 @@ export default function Pix() {
 
       <Divider sx={{ my: "2rem", width: "100%" }} />
 
-      <HowWorks />
+      <HowItWorks />
 
       <Divider sx={{ my: "2rem", width: "100%" }} />
 

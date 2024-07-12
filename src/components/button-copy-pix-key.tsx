@@ -27,9 +27,6 @@ export function ButtonCopyPixKey() {
           width: "28.2rem",
           display: "flex",
           justifyContent: "center",
-          // "&:hover": {
-          //   backgroundColor: theme.palette.secondary.light,
-          // },
           ...(copied && {
             backgroundColor: theme.palette.primary.main,
           }),

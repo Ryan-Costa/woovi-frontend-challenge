@@ -31,7 +31,7 @@ export function InstallmentWrapper({
         pb: "2.3rem",
         height: "100%",
         mb: "-2px",
-        ...(selectedInstallment === index + 2 && {
+        ...(selectedInstallment === index + 1 && {
           backgroundColor: theme.palette.background.paper,
           borderColor: theme.palette.primary.main,
           zIndex: 2,

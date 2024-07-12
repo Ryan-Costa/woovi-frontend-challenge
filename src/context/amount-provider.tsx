@@ -34,8 +34,6 @@ const AmountProvider = ({ children }: { children: React.ReactNode }) => {
       "selectedInstallment",
       JSON.stringify(selectedInstallment)
     );
-
-    console.log("valor: ", selectedAmount, "parcela: ", selectedInstallment);
   }, [selectedAmount, selectedInstallment]);
 
   return (
