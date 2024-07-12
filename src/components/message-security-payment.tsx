@@ -16,18 +16,20 @@ export function MessageSecurityPayment() {
     >
       <GppGoodOutlinedIcon
         sx={{
-          color: theme.palette.primary.main,
+          color: theme.palette.info.main,
           fontSize: 22,
         }}
       />
       <Typography
-        color={theme.palette.primary.main}
+        color={theme.palette.info.main}
         variant="h4"
-        sx={{ lineHeight: "0.8", fontWeight: 600 }}
+        sx={{ fontWeight: 600 }}
       >
         Pagamento 100% seguro via:
       </Typography>
-      <img src={WooviFooterLogo} alt="WooviFooterLogo" />
+      <Box>
+        <img src={WooviFooterLogo} alt="WooviFooterLogo" />
+      </Box>
     </Box>
   );
 }
