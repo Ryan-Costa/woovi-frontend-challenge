@@ -15,8 +15,13 @@ export function ConfirmationModal({
   const theme = useTheme();
   const navigate = useNavigate();
 
-  function closeModal() {
+  function handleCancel() {
     setIsConfirmationModalOpen(false);
+  }
+
+  function handleConfirm() {
+    setIsConfirmationModalOpen(false);
+    navigate("/pix");
   }
 
   return (
@@ -81,12 +86,12 @@ export function ConfirmationModal({
               color: theme.palette.secondary.main,
               fontSize: "1.4rem",
             }}
-            onClick={closeModal}
+            onClick={handleCancel}
           >
             Cancelar
           </Button>
           <Button
-            onClick={() => navigate("/pix")}
+            onClick={handleConfirm}
             variant="contained"
             size="large"
             sx={{
