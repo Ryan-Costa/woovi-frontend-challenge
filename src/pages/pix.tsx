@@ -5,7 +5,7 @@ import { AmountContext } from "../context/amount-provider";
 import { formatCurrency } from "../helper/format-currency";
 import { ButtonCopyPixKey } from "../components/button-copy-pix-key";
 import { ImageQRCode } from "../components/image-qrcode";
-import { Box, Radio, Typography, useTheme } from "@mui/material";
+import { Box, Divider, Radio, Typography, useTheme } from "@mui/material";
 import { TimelineConnector } from "@mui/lab";
 import CheckCircleIcon from "@mui/icons-material/CheckCircle";
 
@@ -122,16 +122,32 @@ export default function Pix() {
               )}
             </Typography>
           ))}
-          {/* <Typography
-            variant="h3"
-            color={theme.palette.text.primary}
-            sx={{ lineHeight: 1 }}
-          >
-            {selectedInstallment * selectedAmount -
-              (selectedInstallment * selectedAmount) / selectedInstallment}
-          </Typography> */}
         </Stack>
       </Box>
+      <Divider sx={{ my: "2rem", width: "100%" }} />
+      <Box
+        sx={{
+          width: "100%",
+          display: "flex",
+          justifyContent: "space-between",
+          alignItems: "center",
+        }}
+      >
+        <Typography variant="h4">CET: 0,5%</Typography>
+        <Typography variant="h2" sx={{ fontWeight: 400 }}>
+          {formatCurrency(selectedInstallment * selectedAmount)}
+        </Typography>
+      </Box>
+      <Divider sx={{ my: "2rem", width: "100%" }} />
+      <Box
+        sx={{
+          width: "100%",
+          display: "flex",
+          justifyContent: "space-between",
+          alignItems: "center",
+        }}
+      ></Box>
+      <Divider sx={{ my: "2rem", width: "100%" }} />
     </Stack>
   );
 }
