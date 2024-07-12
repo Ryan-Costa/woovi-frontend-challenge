@@ -71,7 +71,11 @@ export default function Pix() {
       <ButtonCopyPixKey />
 
       <Stack sx={{ mt: "2rem", textAlign: "center" }}>
-        <Typography variant="h3" color={theme.palette.info.main}>
+        <Typography
+          variant="h3"
+          color={theme.palette.info.main}
+          sx={{ fontWeight: 400 }}
+        >
           Prazo de pagamento
         </Typography>
         <Typography variant="h3" color={theme.palette.text.primary}>
@@ -252,7 +256,25 @@ export default function Pix() {
           </Stack>
         )}
       </Collapse>
+
       <Divider sx={{ my: "2rem", width: "100%" }} />
+
+      <Stack sx={{ mt: "2rem", mb: "4rem", alignItems: "center" }}>
+        <Typography
+          variant="h3"
+          color={theme.palette.info.main}
+          sx={{ fontWeight: 500 }}
+        >
+          Identificador
+        </Typography>
+        <Typography
+          variant="h3"
+          sx={{ fontWeight: 800 }}
+          color={theme.palette.text.primary}
+        >
+          2c1b951f356c4680b13ba1c9fc889c47
+        </Typography>
+      </Stack>
     </Stack>
   );
 }

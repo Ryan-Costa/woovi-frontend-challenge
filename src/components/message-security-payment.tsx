@@ -23,7 +23,7 @@ export function MessageSecurityPayment() {
       <Typography
         color={theme.palette.info.main}
         variant="h4"
-        sx={{ fontWeight: 600 }}
+        sx={{ fontWeight: 500 }}
       >
         Pagamento 100% seguro via:
       </Typography>
