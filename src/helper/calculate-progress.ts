@@ -1,3 +1,3 @@
 export const calculateProgress = (timeLeft: number) => {
-  return (timeLeft / 3600) * 100;
+  return (timeLeft / 300) * 100;
 };

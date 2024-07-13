@@ -13,6 +13,7 @@ import PaymentMethod from "./pages/payment-method.tsx";
 import Pix from "./pages/pix.tsx";
 import { Container } from "./components/container.tsx";
 import { AmountProvider } from "./context/amount-provider.tsx";
+import Credit from "./pages/credit.tsx";
 
 ReactDOM.createRoot(document.getElementById("root")!).render(
   <ThemeProvider theme={DefaultTheme}>
@@ -23,6 +24,7 @@ ReactDOM.createRoot(document.getElementById("root")!).render(
             <Route path="/" element={<Container />}>
               <Route path="/" element={<PaymentMethod />} />
               <Route path="/pix" element={<Pix />} />
+              <Route path="/credit" element={<Credit />} />
             </Route>
           </Routes>
         </Router>

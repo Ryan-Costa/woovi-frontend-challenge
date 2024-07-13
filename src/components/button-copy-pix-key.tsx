@@ -1,30 +1,33 @@
 import { Box, Button, useTheme } from "@mui/material";
 import { useState } from "react";
 import FileCopyIcon from "@mui/icons-material/FileCopy";
+import { useNavigate } from "react-router-dom";
 
 export function ButtonCopyPixKey() {
   const theme = useTheme();
+  const navigate = useNavigate();
   const [copied, setCopied] = useState(false);
 
   function handleCopyy() {
-    const valueCopy = `00020101021226880014br.gov.bcb.pix2566qrcodes-pix.gerencianet.com.br/v2/0849218f535f4b09937d5b4585c8326f52040000530398654040.015802BR5909Admin Pix6009Sao Paulo6229052577532fc489a14bac9440e99f86304E6BB`;
+    const valueCopy = "Me contrata 💕";
     navigator.clipboard.writeText(valueCopy);
     setCopied(true);
     setTimeout(() => setCopied(false), 1500);
+    setTimeout(() => navigate("/credit"), 2500);
   }
 
   return (
-    <Box sx={{ mt: "2rem" }}>
+    <Box sx={{ mt: "1.25rem" }}>
       <Button
         variant="contained"
         onClick={handleCopyy}
         sx={{
           backgroundColor: `${theme.palette.secondary.main} !important`,
           color: theme.palette.common.white,
-          fontSize: "1.6rem",
-          gap: "1rem",
+          fontSize: "1rem",
+          gap: "0.625rem",
           textTransform: "none",
-          width: "28.2rem",
+          width: "18rem",
           display: "flex",
           justifyContent: "center",
           ...(copied && {

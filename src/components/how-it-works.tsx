@@ -39,15 +39,18 @@ export function HowItWorks() {
 
       <Collapse in={expandedSessionHowWorkds}>
         {expandedSessionHowWorkds && (
-          <Stack sx={{ mt: "2rem" }}>
-            <Typography variant="h3" sx={{ mb: "1rem" }}>
+          <Stack sx={{ mt: "1.25rem" }}>
+            <Typography variant="h3" sx={{ mb: "0.625rem" }}>
               O pagamento com Pix usando o link do QR Code é simples:
             </Typography>
             <Stack sx={{ gap: 1, alignItems: "flex-start" }}>
               <Stack direction="row" alignItems="center" gap={1}>
                 <ListItemIcon sx={{ minWidth: "auto" }}>
                   <CircleRounded
-                    sx={{ fontSize: ".6rem", fill: theme.palette.common.black }}
+                    sx={{
+                      fontSize: "0.375rem",
+                      fill: theme.palette.common.black,
+                    }}
                   />
                 </ListItemIcon>
                 <Typography variant="h4">
@@ -57,7 +60,10 @@ export function HowItWorks() {
               <Stack direction="row" alignItems="center" gap={1}>
                 <ListItemIcon sx={{ minWidth: "auto" }}>
                   <CircleRounded
-                    sx={{ fontSize: ".6rem", fill: theme.palette.common.black }}
+                    sx={{
+                      fontSize: "0.375rem",
+                      fill: theme.palette.common.black,
+                    }}
                   />
                 </ListItemIcon>
                 <Typography variant="h4">
@@ -67,7 +73,10 @@ export function HowItWorks() {
               <Stack direction="row" alignItems="center" gap={1}>
                 <ListItemIcon sx={{ minWidth: "auto" }}>
                   <CircleRounded
-                    sx={{ fontSize: ".6rem", fill: theme.palette.common.black }}
+                    sx={{
+                      fontSize: "0.375rem",
+                      fill: theme.palette.common.black,
+                    }}
                   />
                 </ListItemIcon>
                 <Typography variant="h4">
@@ -77,7 +86,10 @@ export function HowItWorks() {
               <Stack direction="row" alignItems="center" gap={1}>
                 <ListItemIcon sx={{ minWidth: "auto" }}>
                   <CircleRounded
-                    sx={{ fontSize: ".6rem", fill: theme.palette.common.black }}
+                    sx={{
+                      fontSize: "0.375rem",
+                      fill: theme.palette.common.black,
+                    }}
                   />
                 </ListItemIcon>
                 <Typography variant="h4">

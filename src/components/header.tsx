@@ -13,7 +13,7 @@ export function Header({ title }: HeaderProps) {
     >
       <img
         src={WooviLogo}
-        style={{ width: "12.35rem", height: "3.7rem", flexShrink: 0 }}
+        style={{ width: "8rem", height: "2.375rem", flexShrink: 0 }}
         alt="Woovi Logo"
       />
       <Typography

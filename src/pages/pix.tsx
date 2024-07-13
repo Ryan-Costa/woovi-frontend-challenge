@@ -42,16 +42,15 @@ export default function Pix() {
 
       <TimeLinePayment />
 
-      <Divider sx={{ my: "2rem", width: "100%" }} />
+      <Divider sx={{ my: "1.25rem", width: "100%" }} />
 
       <TotalAmount />
 
-      <Divider sx={{ my: "2rem", width: "100%" }} />
+      <Divider sx={{ my: "1.25rem", width: "100%" }} />
 
       <HowItWorks />
 
-      <Divider sx={{ my: "2rem", width: "100%" }} />
-
+      <Divider sx={{ my: "1.25rem", width: "100%" }} />
       <IdentifierMessage />
     </Stack>
   );

@@ -31,33 +31,42 @@ export const DefaultTheme = createTheme({
     fontFamily: ["Nunito", "Arial", "sans-serif"].join(","),
     h1: {
       fontWeight: 800,
-      fontSize: "2.4rem",
+      fontSize: "1.5rem",
       lineHeight: "normal",
     },
     h2: {
       fontWeight: 600,
-      fontSize: "1.8rem",
+      fontSize: "1.125rem",
       lineHeight: "normal",
     },
     h3: {
       fontWeight: 600,
-      fontSize: "1.6rem",
+      fontSize: "1rem",
       lineHeight: "normal",
     },
     h4: {
       fontWeight: 400,
-      fontSize: "1.4rem",
+      fontSize: "0.875rem",
       lineHeight: "normal",
     },
     h5: {
       fontWeight: 300,
-      fontSize: "1.2rem",
+      fontSize: "0.75rem",
       lineHeight: "normal",
     },
     h6: {
       fontWeight: 300,
-      fontSize: "1rem",
+      fontSize: "0.625rem",
       lineHeight: "normal",
+    },
+  },
+  components: {
+    MuiOutlinedInput: {
+      styleOverrides: {
+        root: {
+          borderRadius: "8px",
+        },
+      },
     },
   },
 });

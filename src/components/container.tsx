@@ -7,7 +7,7 @@ export function Container() {
     <Stack
       sx={{
         py: 4.5,
-        px: 2,
+        px: 2.5,
       }}
     >
       <Outlet />

@@ -8,10 +8,10 @@ export function ImageQRCode() {
       sx={{
         border: 2,
         borderColor: theme.palette.primary.main,
-        borderRadius: ".8rem",
-        padding: ".5rem",
-        width: "36rem",
-        height: "36rem",
+        borderRadius: ".5rem",
+        padding: ".375rem",
+        width: "22.5rem",
+        height: "22.5rem",
       }}
     >
       <img src="/src/assets/qrcode.png" alt="qrcode" />

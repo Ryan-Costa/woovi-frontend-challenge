@@ -4,7 +4,7 @@ export function IdentifierMessage() {
   const theme = useTheme();
 
   return (
-    <Stack sx={{ mt: "2rem", mb: "4rem", alignItems: "center" }}>
+    <Stack sx={{ mt: "1.25rem", mb: "1.25rem", alignItems: "center" }}>
       <Typography
         variant="h3"
         color={theme.palette.info.main}

@@ -7,7 +7,7 @@ import { calculateProgress } from "../helper/calculate-progress";
 
 export function PaymentTermTime() {
   const theme = useTheme();
-  const [timeLeft, setTimeLeft] = useState(3600); // 1 hora = 3600 segundos
+  const [timeLeft, setTimeLeft] = useState(300);
   const [endTime] = useState(calculateEndTime());
 
   useEffect(() => {
@@ -21,14 +21,13 @@ export function PaymentTermTime() {
         }
         return prevTime - 1;
       });
-    }, 10);
+    }, 1000);
 
-    // Limpeza do intervalo ao desmontar o componente
     return () => clearInterval(timer);
   }, []);
 
   return (
-    <Stack sx={{ mt: "2rem", textAlign: "center" }}>
+    <Stack sx={{ mt: "1.25rem", textAlign: "center" }}>
       <Typography
         variant="h3"
         color={theme.palette.info.main}
