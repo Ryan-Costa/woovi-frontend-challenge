@@ -40,7 +40,6 @@ export function SelectInstallments() {
       <Stack
         sx={{
           width: "100%",
-          maxWidth: "26.5rem",
           justifyContent: "center",
           flexDirection: "column",
         }}
@@ -187,7 +186,11 @@ export function SelectInstallments() {
                           fontWeight: 600,
                         }}
                       >
-                        {formatCurrency(installment.amount)}
+                        {installment.numInstallments === 4
+                          ? formatCurrency(
+                              installment.amount - installment.amount * 0.03
+                            )
+                          : formatCurrency(installment.amount)}
                       </Typography>
                     </Box>
 
@@ -199,9 +202,14 @@ export function SelectInstallments() {
                     >
                       <Typography variant="h3" color="text.secondary">
                         Total:{" "}
-                        {formatCurrency(
-                          installment.amount * installment.numInstallments
-                        )}
+                        {installment.numInstallments === 4
+                          ? formatCurrency(
+                              (installment.amount - installment.amount * 0.03) *
+                                installment.numInstallments
+                            )
+                          : formatCurrency(
+                              installment.amount * installment.numInstallments
+                            )}
                       </Typography>
                     </Box>
                   </Box>
