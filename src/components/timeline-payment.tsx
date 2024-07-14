@@ -4,17 +4,21 @@ import { formatCurrency } from "../helper/format-currency";
 import CheckCircleIcon from "@mui/icons-material/CheckCircle";
 import { useContext } from "react";
 import { AmountContext } from "../context/amount-provider";
+import { useLocation } from "react-router-dom";
 
 export function TimeLinePayment() {
   const theme = useTheme();
-  const { selectedAmount, selectedInstallment } = useContext(AmountContext);
+  const location = useLocation();
+  const { selectedAmount, selectedInstallment, paymentInfo } =
+    useContext(AmountContext);
+
   return (
     <Box
       sx={{
         display: "flex",
         width: "100%",
         justifyContent: "space-between",
-        mt: "2rem",
+        mt: "1.25rem",
       }}
     >
       <Stack sx={{ alignItems: "flex-start" }}>
@@ -22,6 +26,7 @@ export function TimeLinePayment() {
           <Stack sx={{ alignItems: "center" }}>
             <Radio
               disabled
+              checked={location.pathname === "/credit"}
               checkedIcon={
                 <CheckCircleIcon sx={{ color: theme.palette.primary.main }} />
               }
@@ -33,63 +38,58 @@ export function TimeLinePayment() {
                 padding: 0,
               }}
             />
-            {Array.from({ length: selectedInstallment - 1 }).map((_, index) => (
-              <Stack sx={{ alignItems: "center" }} key={index}>
-                <TimelineConnector
-                  sx={{
-                    height: "4rem",
-                    mt: "-.2rem",
-                    backgroundColor: theme.palette.primary.light,
-                  }}
-                />
-                <Radio
-                  disabled
-                  checkedIcon={
-                    <CheckCircleIcon
-                      sx={{ color: theme.palette.primary.main }}
-                    />
-                  }
-                  sx={{
-                    "& .MuiSvgIcon-root": {
-                      color: theme.palette.primary.main,
-                      fontSize: 20,
-                      mt: "-.2rem",
-                      fill: theme.palette.primary.light,
-                    },
-                    padding: 0,
-                  }}
-                />
-              </Stack>
-            ))}
+            <Stack sx={{ alignItems: "center" }}>
+              <TimelineConnector
+                sx={{
+                  height: "1.6rem",
+                  mt: "-0.125rem",
+                  backgroundColor: theme.palette.primary.light,
+                }}
+              />
+              <Radio
+                disabled
+                checkedIcon={
+                  <CheckCircleIcon sx={{ color: theme.palette.primary.main }} />
+                }
+                sx={{
+                  "& .MuiSvgIcon-root": {
+                    color: theme.palette.primary.main,
+                    fontSize: 20,
+                    mt: "-0.125rem",
+                    fill: theme.palette.primary.light,
+                  },
+                  padding: 0,
+                }}
+              />
+            </Stack>
+            {/* ))} */}
           </Stack>
-          <Stack sx={{ ml: "1rem", justifyContent: "space-between" }}>
-            {Array.from({ length: selectedInstallment }).map((_, index) => (
-              <Typography
-                variant="h3"
-                color={theme.palette.text.primary}
-                key={index}
-              >
-                {index + 1}ª {index > 0 ? null : "entrada"} no{" "}
-                {index > 0 ? "Cartão" : "Pix"}
-              </Typography>
-            ))}
+          <Stack sx={{ ml: "0.625rem", justifyContent: "space-between" }}>
+            <Typography variant="h3" color={theme.palette.text.primary}>
+              À vista no Pix
+            </Typography>
+            <Typography variant="h3" color={theme.palette.text.primary}>
+              2ª no cartão
+            </Typography>
           </Stack>
         </Box>
       </Stack>
 
       <Stack sx={{ justifyContent: "space-between" }}>
-        {Array.from({ length: selectedInstallment }).map((_, index) => (
-          <Typography
-            key={index}
-            variant="h3"
-            color={theme.palette.text.primary}
-            sx={{ lineHeight: 1 }}
-          >
-            {formatCurrency(
-              (selectedInstallment * selectedAmount) / selectedInstallment
-            )}
-          </Typography>
-        ))}
+        <Typography
+          variant="h3"
+          color={theme.palette.text.primary}
+          sx={{ lineHeight: 1, textAlign: "right" }}
+        >
+          {formatCurrency(selectedAmount)}
+        </Typography>
+        <Typography
+          variant="h3"
+          color={theme.palette.text.primary}
+          sx={{ lineHeight: 1, textAlign: "right" }}
+        >
+          {formatCurrency(selectedAmount * (selectedInstallment - 1))}
+        </Typography>
       </Stack>
     </Box>
   );

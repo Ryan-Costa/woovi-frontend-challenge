@@ -20,15 +20,13 @@ export function InstallmentWrapper({
       sx={{
         position: "relative",
         alignItems: "start",
-        gap: "0.7rem",
+        gap: "0.5rem",
         zIndex: 1,
         border: 2,
         borderColor: theme.palette.text.disabled,
         backgroundColor: theme.palette.common.white,
         width: "100%",
-        px: "2rem",
-        pt: "2rem",
-        pb: "2.3rem",
+        p: "1.75rem 1.25rem 1.5rem 1.25rem",
         height: "100%",
         mb: "-2px",
         ...(selectedInstallment === index + 1 && {
@@ -36,7 +34,7 @@ export function InstallmentWrapper({
           borderColor: theme.palette.primary.main,
           zIndex: 2,
         }),
-        ...(index === 0 && {
+        ...(index === 1 && {
           borderTopLeftRadius: 8,
           borderTopRightRadius: 8,
         }),
