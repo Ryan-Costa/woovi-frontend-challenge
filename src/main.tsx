@@ -15,6 +15,7 @@ import { Container } from "./components/container.tsx";
 import { AmountProvider } from "./context/amount-provider.tsx";
 import Credit from "./pages/credit.tsx";
 import App from "./app.tsx";
+import { PaymentMade } from "./pages/payment-made.tsx";
 
 ReactDOM.createRoot(document.getElementById("root")!).render(
   <ThemeProvider theme={DefaultTheme}>
@@ -27,10 +28,7 @@ ReactDOM.createRoot(document.getElementById("root")!).render(
               <Route path="/select-payment" element={<PaymentMethod />} />
               <Route path="/pix" element={<Pix />} />
               <Route path="/credit" element={<Credit />} />
-              <Route
-                path="/payment-made"
-                element={<div>PAGAMENTO REALIZADO</div>}
-              />
+              <Route path="/payment-made" element={<PaymentMade />} />
             </Route>
           </Routes>
         </Router>

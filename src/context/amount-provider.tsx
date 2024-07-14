@@ -42,7 +42,6 @@ const AmountProvider = ({ children }: { children: React.ReactNode }) => {
   const cetFee = 0.005;
 
   useEffect(() => {
-    StorageService.clearAll();
     StorageService.setItem("totalAmount", totalAmount);
   }, [totalAmount]);
 
@@ -66,13 +65,13 @@ const AmountProvider = ({ children }: { children: React.ReactNode }) => {
   });
 
   const [selectedInstallment, setSelectedInstallment] = useState(() => {
-    const saved = StorageService.getItem<number>("selectedInstallment");
-    return saved ? saved : 1;
+    const savedValue = StorageService.getItem<number>("selectedInstallment");
+    return savedValue ? savedValue : 1;
   });
 
   const [selectedAmount, setSelectedAmount] = useState(() => {
-    const saved = StorageService.getItem<number>("selectedAmount");
-    return saved ? saved : totalAmount;
+    const savedValue = StorageService.getItem<number>("selectedAmount");
+    return savedValue ? savedValue : totalAmount;
   });
 
   const [paymentInfo, setPaymentInfo] = useState<PaymentInfoProps>({

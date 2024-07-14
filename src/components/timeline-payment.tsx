@@ -2,14 +2,48 @@ import { TimelineConnector } from "@mui/lab";
 import { Box, Radio, Stack, Typography, useTheme } from "@mui/material";
 import { formatCurrency } from "../helper/format-currency";
 import CheckCircleIcon from "@mui/icons-material/CheckCircle";
-import { useContext } from "react";
+import { useContext, useEffect, useState } from "react";
 import { AmountContext } from "../context/amount-provider";
 import { useLocation } from "react-router-dom";
+import { StorageService } from "../helper/local-storage";
+import { CalcCetFee } from "../helper/calc-cet-fee";
 
 export function TimeLinePayment() {
   const theme = useTheme();
   const location = useLocation();
-  const { selectedAmount, selectedInstallment } = useContext(AmountContext);
+  const { selectedAmount, selectedInstallment, cetFee } =
+    useContext(AmountContext);
+  const [newInstallmentSelected, setNewInstallmentSelected] = useState(
+    StorageService.getItem<number>("newInstallmentCardPayment") || 1
+  );
+
+  useEffect(() => {
+    const handleStorageChange = () => {
+      const newValue =
+        StorageService.getItem<number>("newInstallmentCardPayment") || 1;
+      setNewInstallmentSelected(newValue);
+    };
+
+    window.addEventListener("storage", handleStorageChange);
+
+    return () => {
+      window.removeEventListener("storage", handleStorageChange);
+    };
+  }, []);
+
+  const hasNewInstallmentCardPaymentAvailable = `${newInstallmentSelected}x de ${
+    newInstallmentSelected
+      ? formatCurrency(
+          CalcCetFee(
+            (selectedAmount * (selectedInstallment - 1)) /
+              newInstallmentSelected,
+            cetFee
+          )
+        )
+      : formatCurrency(
+          CalcCetFee(selectedAmount * (selectedInstallment - 1), cetFee)
+        )
+  }`;
 
   return (
     <Box
@@ -93,7 +127,14 @@ export function TimeLinePayment() {
             color={theme.palette.text.primary}
             sx={{ lineHeight: 1, textAlign: "right" }}
           >
-            {formatCurrency(selectedAmount * (selectedInstallment - 1))}
+            {location.pathname === "/credit"
+              ? hasNewInstallmentCardPaymentAvailable
+              : newInstallmentSelected
+              ? formatCurrency(
+                  (selectedAmount * (selectedInstallment - 1)) /
+                    newInstallmentSelected
+                )
+              : formatCurrency(selectedAmount * (selectedInstallment - 1))}
           </Typography>
         )}
       </Stack>

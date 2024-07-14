@@ -5,6 +5,7 @@ import { HelpOutline } from "@mui/icons-material";
 import { useContext, useState } from "react";
 import { AmountContext } from "../context/amount-provider";
 import { useLocation } from "react-router-dom";
+import { CalcCetFee } from "../helper/calc-cet-fee";
 
 export function TotalAmount() {
   const { getItem } = StorageService;
@@ -20,11 +21,6 @@ export function TotalAmount() {
 
   function mouseLeaveHelp() {
     setHelpIsOpen(false);
-  }
-
-  function CalcCetFee(amount: number, cetFee: number) {
-    const cetFeeAmountCalculated = amount * (1 + cetFee);
-    return cetFeeAmountCalculated;
   }
 
   return (
@@ -83,7 +79,6 @@ export function TotalAmount() {
               )
             )
           : formatCurrency(Number(newTotalDebits))}
-        {}
       </Typography>
     </Box>
   );

@@ -3,7 +3,7 @@ import { useContext, useState } from "react";
 import FileCopyIcon from "@mui/icons-material/FileCopy";
 import { useNavigate } from "react-router-dom";
 import { AmountContext } from "../context/amount-provider";
-import { PaymentMadeModal } from "./payment-made-modal";
+import { PaymentMadeModalPix } from "./payment-made-modal-pix";
 
 export function ButtonCopyPixKey() {
   const theme = useTheme();
@@ -60,7 +60,7 @@ export function ButtonCopyPixKey() {
         )}
       </Button>
 
-      {modalConfirmPayment && <PaymentMadeModal />}
+      {modalConfirmPayment && <PaymentMadeModalPix />}
     </Box>
   );
 }

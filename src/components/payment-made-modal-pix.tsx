@@ -1,8 +1,14 @@
 import { Stack, Box, Typography, useTheme } from "@mui/material";
 import CheckCircleIcon from "@mui/icons-material/CheckCircle";
+import { StorageService } from "../helper/local-storage";
+import { formatCurrency } from "../helper/format-currency";
 
-export function PaymentMadeModal() {
+export function PaymentMadeModalPix() {
   const theme = useTheme();
+  const totalAmountPaymedPix = StorageService.getItem("selectedAmount")
+    ? StorageService.getItem("selectedAmount")
+    : StorageService.getItem("totalAmount");
+
   return (
     <Stack
       sx={{
@@ -34,8 +40,13 @@ export function PaymentMadeModal() {
         <CheckCircleIcon
           sx={{ fontSize: "10rem", color: theme.palette.primary.main }}
         />
-        <Typography variant="h1" sx={{ color: theme.palette.text.primary }}>
-          Pagamento realizado
+        <Typography
+          variant="h1"
+          sx={{ color: theme.palette.text.primary, textAlign: "center" }}
+        >
+          {`Pagamento de ${formatCurrency(
+            Number(totalAmountPaymedPix)
+          )} realizado no pix `}
         </Typography>
       </Box>
     </Stack>

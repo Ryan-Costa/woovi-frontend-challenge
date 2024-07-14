@@ -5,61 +5,69 @@ import {
   InputLabel,
   MenuItem,
   Select,
+  SelectChangeEvent,
   useTheme,
 } from "@mui/material";
 import TextField from "@mui/material/TextField";
-import { ChangeEvent, useContext, useState } from "react";
+import { ChangeEvent, useContext, useEffect, useState } from "react";
 import { AmountContext } from "../context/amount-provider";
 import { formatCurrency } from "../helper/format-currency";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { Controller, useForm } from "react-hook-form";
+import { useForm } from "react-hook-form";
 import { CpfMask } from "../helper/cpf-mask";
 import { DateMask } from "../helper/date-mask";
 import { CardNumberMask } from "../helper/card-mask";
+import { StorageService } from "../helper/local-storage";
+import { useNavigate } from "react-router-dom";
 
 const creditCardPaymentSchema = z.object({
-  fullName: z.string({
-    required_error: "Nome completo é obrigatório",
-  }),
-  cpf: z.string({ required_error: "CPF é obrigatório" }),
-  cardNumber: z
-    .string({
-      required_error: "Número do cartão é obrigatório",
-    })
-    .min(16, "Número do cartão inválido"),
-  expirationDate: z.string({
-    required_error: "Vencimento é obrigatório",
-  }),
-  cvv: z
-    .string({
-      required_error: "CVV é obrigatório",
-    })
-    .min(3, "CVV inválido")
-    .max(4, "CVV inválido"),
-  installment: z.number().nonnegative("Parcelas são obrigatórias"),
+  fullName: z.string().min(2, "Nome muito curto"),
+  cpf: z.string().min(14, "CPF é obrigatório"),
+  cardNumber: z.string().min(19, "Número do cartão inválido"),
+  expirationDate: z.string().min(7, "Data de vencimento é obrigatória"),
+  cvv: z.string().min(3, "CVV inválido"),
+  installment: z.string(),
 });
 
 type FormCreditCardPaymentForm = z.infer<typeof creditCardPaymentSchema>;
 
 export function CreditCardPaymentForm() {
   const theme = useTheme();
+  const navigate = useNavigate();
   const { selectedAmount, selectedInstallment, cetFee } =
     useContext(AmountContext);
   const [cpfMask, setCpfMask] = useState("");
   const [dateMask, setDateMask] = useState("");
   const [cardNumberMask, setCardNumberMask] = useState("");
+  const [newInstallmentCardPayment, setNewInstallmentCardPayment] = useState(
+    () => {
+      const hasNewInstallmentCardPayment = StorageService.getItem<number>(
+        "newInstallmentCardPayment"
+      );
+      return hasNewInstallmentCardPayment ? hasNewInstallmentCardPayment : 1;
+    }
+  );
 
   const {
-    control,
+    register,
     handleSubmit,
     formState: { errors },
   } = useForm<FormCreditCardPaymentForm>({
     resolver: zodResolver(creditCardPaymentSchema),
   });
 
+  useEffect(() => {
+    StorageService.setItem(
+      "newInstallmentCardPayment",
+      newInstallmentCardPayment
+    );
+  }, [newInstallmentCardPayment]);
+
   function onSubmit(data: FormCreditCardPaymentForm) {
     console.log(data);
+
+    navigate("/payment-made");
   }
 
   function handleCpfChange(e: ChangeEvent<HTMLInputElement>) {
@@ -74,58 +82,46 @@ export function CreditCardPaymentForm() {
     setCardNumberMask(CardNumberMask(e.target.value));
   }
 
+  function handleChangeNewInstallment(e: SelectChangeEvent<number>) {
+    setNewInstallmentCardPayment(Number(e.target.value));
+    StorageService.setItem("newInstallmentCardPayment", Number(e.target.value));
+    window.dispatchEvent(new Event("storage"));
+  }
+
   return (
     <FormControl
       sx={{ width: "100%", gap: "1.75rem", maxWidth: "26.5rem" }}
       component="form"
       onSubmit={handleSubmit(onSubmit)}
     >
-      <Controller
-        name="fullName"
-        control={control}
-        render={({ field }) => (
-          <TextField
-            {...field}
-            label="Nome completo"
-            variant="outlined"
-            error={!!errors.fullName}
-            helperText={errors.fullName?.message}
-          />
-        )}
+      <TextField
+        {...register("fullName")}
+        label="Nome completo"
+        variant="outlined"
+        error={!!errors.fullName}
+        helperText={errors.fullName?.message}
       />
 
-      <Controller
-        name="cpf"
-        control={control}
-        render={({ field }) => (
-          <TextField
-            {...field}
-            label="CPF"
-            variant="outlined"
-            onChange={handleCpfChange}
-            value={cpfMask}
-            inputProps={{ maxLength: 14 }}
-            error={!!errors.cpf}
-            helperText={errors.cpf?.message}
-          />
-        )}
+      <TextField
+        {...register("cpf")}
+        label="CPF"
+        variant="outlined"
+        onChange={handleCpfChange}
+        value={cpfMask}
+        inputProps={{ maxLength: 14 }}
+        error={!!errors.cpf}
+        helperText={errors.cpf?.message}
       />
 
-      <Controller
-        name="cardNumber"
-        control={control}
-        render={({ field }) => (
-          <TextField
-            {...field}
-            label="Número do cartão"
-            variant="outlined"
-            onChange={handleCardNumberChange}
-            value={cardNumberMask}
-            inputProps={{ maxLength: 19 }}
-            error={!!errors.cardNumber}
-            helperText={errors.cardNumber?.message}
-          />
-        )}
+      <TextField
+        {...register("cardNumber")}
+        label="Número do cartão"
+        variant="outlined"
+        onChange={handleCardNumberChange}
+        value={cardNumberMask}
+        inputProps={{ maxLength: 19 }}
+        error={!!errors.cardNumber}
+        helperText={errors.cardNumber?.message}
       />
 
       <Box
@@ -135,66 +131,50 @@ export function CreditCardPaymentForm() {
           gap: "1.375rem",
         }}
       >
-        <Controller
-          name="expirationDate"
-          control={control}
-          render={({ field }) => (
-            <TextField
-              {...field}
-              label="Vencimento"
-              variant="outlined"
-              onChange={handleDateChange}
-              value={dateMask}
-              error={!!errors.expirationDate}
-              helperText={errors.expirationDate?.message}
-            />
-          )}
+        <TextField
+          {...register("expirationDate")}
+          label="Vencimento"
+          variant="outlined"
+          onChange={handleDateChange}
+          value={dateMask}
+          error={!!errors.expirationDate}
+          helperText={errors.expirationDate?.message}
         />
 
-        <Controller
-          name="cvv"
-          control={control}
-          render={({ field }) => (
-            <TextField
-              {...field}
-              label="CVV"
-              variant="outlined"
-              inputProps={{ maxLength: 3 }}
-              error={!!errors.cvv}
-              helperText={errors.cvv?.message}
-            />
-          )}
+        <TextField
+          {...register("cvv")}
+          label="CVV"
+          variant="outlined"
+          inputProps={{ maxLength: 3 }}
+          error={!!errors.cvv}
+          helperText={errors.cvv?.message}
         />
       </Box>
 
       <FormControl>
         <InputLabel id="installment">Parcelas</InputLabel>
-        <Controller
-          name="installment"
-          control={control}
-          render={({ field }) => (
-            <Select
-              {...field}
-              id="installment"
-              label="Parcelas"
-              error={!!errors.installment}
-              onChange={(e) => console.log(e.target.value)}
-            >
-              {Array.from({ length: 12 }).map((_, index) => (
-                <MenuItem key={index} value={index + 1}>
-                  {index + 1}x de{" "}
-                  {formatCurrency(
-                    (((selectedInstallment * selectedAmount) / 1 -
-                      (selectedInstallment * selectedAmount) /
-                        selectedInstallment) /
-                      (index + 1)) *
-                      (1 + cetFee)
-                  )}
-                </MenuItem>
-              ))}
-            </Select>
-          )}
-        />
+
+        <Select
+          {...register("installment")}
+          id="installment"
+          label="Parcelas"
+          value={newInstallmentCardPayment}
+          error={!!errors.installment}
+          onChange={handleChangeNewInstallment}
+        >
+          {Array.from({ length: 12 }).map((_, index) => (
+            <MenuItem key={index} value={index + 1}>
+              {index + 1}x de{" "}
+              {formatCurrency(
+                (((selectedInstallment * selectedAmount) / 1 -
+                  (selectedInstallment * selectedAmount) /
+                    selectedInstallment) /
+                  (index + 1)) *
+                  (1 + cetFee)
+              )}
+            </MenuItem>
+          ))}
+        </Select>
       </FormControl>
 
       <Button
