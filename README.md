@@ -15,7 +15,10 @@ npm run dev
 
 ### Digite um valor -> Escolha uma parcela -> Confirme o valor -> Clique para copiar o QRCode -> Se houver valor restante (preencha o formulãrio e clique em pagar)
 
-![image](https://github.com/user-attachments/assets/28790daa-22ea-457f-a2ef-8de21ae3f1db) ![image](https://github.com/user-attachments/assets/e250d61c-da96-42f5-bb92-43792663f175) ![image](https://github.com/user-attachments/assets/d905e161-8268-4896-8eb7-ec4081c00a6d) ![image](https://github.com/user-attachments/assets/9d2a2de9-e132-4ee0-8831-0aeb22a96803)
+![image](https://github.com/user-attachments/assets/4ec821da-1e6b-4ed8-a426-5c9c88edec79) ![image](https://github.com/user-attachments/assets/e250d61c-da96-42f5-bb92-43792663f175) ![image](https://github.com/user-attachments/assets/d905e161-8268-4896-8eb7-ec4081c00a6d) ![image](https://github.com/user-attachments/assets/1835a223-1156-42bc-ac27-fda63fd347a5)
+
+
+
 
 
 
