@@ -15,7 +15,7 @@ export default function Credit() {
         alignItems: "center",
       }}
     >
-      <Header title={`João, pague o restante no cartão`} />
+      <Header title={`Ryan, pague o restante no cartão`} />
       <CreditCardPaymentForm />
 
       <PaymentTermTime />

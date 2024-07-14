@@ -46,7 +46,7 @@ export default function Pix() {
       }}
     >
       <Header
-        title={`João, pague a entrada de ${formatCurrency(
+        title={`Ryan, pague a entrada de ${formatCurrency(
           selectedAmount
         )} pelo Pix`}
       />

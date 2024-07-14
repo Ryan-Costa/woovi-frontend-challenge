@@ -12,7 +12,7 @@ export default function PaymentMethod() {
         width: "100%",
       }}
     >
-      <Header title="João, como você quer pagar?" />
+      <Header title="Ryan, como você quer pagar?" />
 
       <SelectInstallments />
     </Stack>
