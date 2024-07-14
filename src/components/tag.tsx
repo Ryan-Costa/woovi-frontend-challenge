@@ -1,6 +1,4 @@
 import { Box, Typography } from "@mui/material";
-import { useContext } from "react";
-import { AmountContext } from "../context/amount-provider";
 
 interface TagProps {
   text: string;
