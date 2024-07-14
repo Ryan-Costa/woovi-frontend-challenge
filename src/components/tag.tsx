@@ -14,33 +14,42 @@ export function Tag({ text, textBold }: TagProps) {
         display: "flex",
         width: "100%",
         flex: 1,
-        gap: "0.4rem",
-        backgroundImage: "url('./src/assets/tag.svg')",
-        backgroundSize: "contain",
-        backgroundRepeat: "no-repeat",
-        backgroundPosition: "center",
+        alignItems: "center",
+        justifyContent: "center",
+        position: "relative",
       }}
     >
-      <Typography
-        variant="h3"
-        color="common.white"
-        sx={{
-          fontWeight: 600,
-          whiteSpace: "nowrap",
-        }}
-      >
-        {textBold}
-      </Typography>
-      <Typography
-        variant="h3"
-        color="common.white"
-        sx={{
-          fontWeight: 400,
-          whiteSpace: "nowrap",
-        }}
-      >
-        {text}
-      </Typography>
+      <img
+        src="/src/assets/tag.svg"
+        alt="tag"
+        style={{ position: "absolute", zIndex: 0, flex: 1 }}
+      />
+      <Box sx={{ display: "flex", width: "100%", gap: "0.4rem" }}>
+        <Typography
+          variant="h3"
+          color="common.white"
+          sx={{
+            textAlign: "left",
+            fontWeight: 600,
+            whiteSpace: "nowrap",
+            zIndex: 1,
+          }}
+        >
+          {textBold}
+        </Typography>
+        <Typography
+          variant="h3"
+          color="common.white"
+          sx={{
+            textAlign: "left",
+            fontWeight: 400,
+            whiteSpace: "nowrap",
+            zIndex: 1,
+          }}
+        >
+          {text}
+        </Typography>
+      </Box>
     </Box>
   );
 }
