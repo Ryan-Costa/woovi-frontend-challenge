@@ -42,6 +42,7 @@ const AmountProvider = ({ children }: { children: React.ReactNode }) => {
   const cetFee = 0.005;
 
   useEffect(() => {
+    StorageService.clearAll();
     StorageService.setItem("totalAmount", totalAmount);
   }, [totalAmount]);
 
