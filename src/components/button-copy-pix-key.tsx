@@ -1,8 +1,9 @@
-import { Box, Button, Stack, Typography, useTheme } from "@mui/material";
+import { Box, Button, useTheme } from "@mui/material";
 import { useContext, useState } from "react";
 import FileCopyIcon from "@mui/icons-material/FileCopy";
 import { useNavigate } from "react-router-dom";
 import { AmountContext } from "../context/amount-provider";
+import { PaymentMadeModal } from "./payment-made-modal";
 
 export function ButtonCopyPixKey() {
   const theme = useTheme();
@@ -59,36 +60,7 @@ export function ButtonCopyPixKey() {
         )}
       </Button>
 
-      {modalConfirmPayment && (
-        <Stack
-          sx={{
-            position: "fixed",
-            inset: 0,
-            backgroundColor: "rgba(0, 0, 0, 0.6)",
-            backgroundopacity: "0.6",
-            display: "flex",
-            justifyContent: "center",
-            alignItems: "center",
-            zIndex: "modal",
-            px: 2,
-          }}
-        >
-          <Box
-            sx={{
-              width: "100%",
-              maxWidth: "26.5rem",
-              backgroundColor: theme.palette.common.white,
-              padding: "1.25rem",
-              borderRadius: 1,
-              display: "flex",
-              flexDirection: "column",
-              gap: "2.5rem",
-            }}
-          >
-            <Typography>Pagamento realizado</Typography>
-          </Box>
-        </Stack>
-      )}
+      {modalConfirmPayment && <PaymentMadeModal />}
     </Box>
   );
 }
