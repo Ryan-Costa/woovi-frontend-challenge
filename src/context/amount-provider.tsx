@@ -1,10 +1,11 @@
-import React, { createContext, useState } from "react";
+import React, { createContext, useEffect, useState } from "react";
 import { StorageService } from "../helper/local-storage";
 
 interface AmountContextType {
   totalAmount: number;
   selectedAmount: number;
   totalDebits: number;
+  setTotalAmount: (totalAmount: number) => void;
   updateAmount: (newAmountSelected: number) => void;
   selectedInstallment: number;
   updateInstallment: (newInstallmentSelected: number) => void;
@@ -31,12 +32,18 @@ interface PaymentInfoProps {
 const AmountContext = createContext<AmountContextType>({} as AmountContextType);
 
 const AmountProvider = ({ children }: { children: React.ReactNode }) => {
-  const { setItem, getItem } = StorageService;
+  const [totalAmount, setTotalAmount] = useState<number>(() => {
+    const storedAmount = StorageService.getItem<number>("totalAmount");
+    return storedAmount ? storedAmount : 0;
+  });
 
-  const totalAmount = 20000;
   const installmentsQty = 7;
   const interestRate = 0.03;
   const cetFee = 0.005;
+
+  useEffect(() => {
+    StorageService.setItem("totalAmount", totalAmount);
+  }, [totalAmount]);
 
   function calculateInstallmentRate(
     totalAmount: number,
@@ -58,13 +65,13 @@ const AmountProvider = ({ children }: { children: React.ReactNode }) => {
   });
 
   const [selectedInstallment, setSelectedInstallment] = useState(() => {
-    const saved = getItem("selectedInstallment");
-    return Number(saved);
+    const saved = StorageService.getItem<number>("selectedInstallment");
+    return saved ? saved : 1;
   });
 
   const [selectedAmount, setSelectedAmount] = useState(() => {
-    const saved = localStorage.getItem("selectedAmount");
-    return Number(saved);
+    const saved = StorageService.getItem<number>("selectedAmount");
+    return saved ? saved : totalAmount;
   });
 
   const [paymentInfo, setPaymentInfo] = useState<PaymentInfoProps>({
@@ -72,28 +79,31 @@ const AmountProvider = ({ children }: { children: React.ReactNode }) => {
     paymentMethods: [],
   });
 
-  const [totalDebits] = useState<number>(() => {
-    const savedNewDebit = getItem("newTotalDebits");
-    return Number(savedNewDebit);
+  const [totalDebits, setTotalDebits] = useState<number>(() => {
+    const savedNewDebit = StorageService.getItem<number>("newTotalDebits");
+    return savedNewDebit ? savedNewDebit : 0;
   });
 
   function updateAmount(newAmountSelected: number) {
-    setItem("selectedAmount", selectedAmount);
+    StorageService.setItem("selectedAmount", newAmountSelected);
     setSelectedAmount(newAmountSelected);
   }
 
   function updateInstallment(newInstallmentSelected: number) {
-    setItem("selectedInstallment", selectedInstallment);
+    StorageService.setItem("selectedInstallment", newInstallmentSelected);
     setSelectedInstallment(newInstallmentSelected);
   }
 
   function updateTotalDebit(newTotalDebit: number) {
-    setItem("newTotalDebit", newTotalDebit);
+    StorageService.setItem("newTotalDebits", newTotalDebit);
+    setTotalDebits(newTotalDebit);
     setPaymentInfo((prevPaymentInfo) => ({
       ...prevPaymentInfo,
       totalDebit: newTotalDebit,
     }));
   }
+
+  console.log(paymentInfo);
 
   function addNewPaymentAmount(
     type: string,
@@ -128,11 +138,10 @@ const AmountProvider = ({ children }: { children: React.ReactNode }) => {
     }));
   }
 
-  console.log(paymentInfo);
-
   return (
     <AmountContext.Provider
       value={{
+        setTotalAmount,
         selectedAmount,
         updateAmount,
         totalDebits,

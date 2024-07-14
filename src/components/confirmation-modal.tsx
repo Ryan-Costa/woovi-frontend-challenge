@@ -17,7 +17,6 @@ export function ConfirmationModal({
     selectedInstallment,
     updateTotalDebit,
     addNewPaymentAmount,
-    paymentInfo,
   } = useContext(AmountContext);
 
   useEffect(() => {

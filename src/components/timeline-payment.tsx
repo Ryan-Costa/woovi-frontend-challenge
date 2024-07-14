@@ -9,8 +9,7 @@ import { useLocation } from "react-router-dom";
 export function TimeLinePayment() {
   const theme = useTheme();
   const location = useLocation();
-  const { selectedAmount, selectedInstallment, paymentInfo } =
-    useContext(AmountContext);
+  const { selectedAmount, selectedInstallment } = useContext(AmountContext);
 
   return (
     <Box
@@ -38,39 +37,44 @@ export function TimeLinePayment() {
                 padding: 0,
               }}
             />
-            <Stack sx={{ alignItems: "center" }}>
-              <TimelineConnector
-                sx={{
-                  height: "1.6rem",
-                  mt: "-0.125rem",
-                  backgroundColor: theme.palette.primary.light,
-                }}
-              />
-              <Radio
-                disabled
-                checkedIcon={
-                  <CheckCircleIcon sx={{ color: theme.palette.primary.main }} />
-                }
-                sx={{
-                  "& .MuiSvgIcon-root": {
-                    color: theme.palette.primary.main,
-                    fontSize: 20,
+            {selectedInstallment > 1 && (
+              <Stack sx={{ alignItems: "center" }}>
+                <TimelineConnector
+                  sx={{
+                    height: "1.6rem",
                     mt: "-0.125rem",
-                    fill: theme.palette.primary.light,
-                  },
-                  padding: 0,
-                }}
-              />
-            </Stack>
-            {/* ))} */}
+                    backgroundColor: theme.palette.primary.light,
+                  }}
+                />
+                <Radio
+                  disabled
+                  checkedIcon={
+                    <CheckCircleIcon
+                      sx={{ color: theme.palette.primary.main }}
+                    />
+                  }
+                  sx={{
+                    "& .MuiSvgIcon-root": {
+                      color: theme.palette.primary.main,
+                      fontSize: 20,
+                      mt: "-0.125rem",
+                      fill: theme.palette.primary.light,
+                    },
+                    padding: 0,
+                  }}
+                />
+              </Stack>
+            )}
           </Stack>
           <Stack sx={{ ml: "0.625rem", justifyContent: "space-between" }}>
             <Typography variant="h3" color={theme.palette.text.primary}>
               À vista no Pix
             </Typography>
-            <Typography variant="h3" color={theme.palette.text.primary}>
-              2ª no cartão
-            </Typography>
+            {selectedInstallment > 1 && (
+              <Typography variant="h3" color={theme.palette.text.primary}>
+                Restante no cartão
+              </Typography>
+            )}
           </Stack>
         </Box>
       </Stack>
@@ -83,13 +87,15 @@ export function TimeLinePayment() {
         >
           {formatCurrency(selectedAmount)}
         </Typography>
-        <Typography
-          variant="h3"
-          color={theme.palette.text.primary}
-          sx={{ lineHeight: 1, textAlign: "right" }}
-        >
-          {formatCurrency(selectedAmount * (selectedInstallment - 1))}
-        </Typography>
+        {selectedInstallment > 1 && (
+          <Typography
+            variant="h3"
+            color={theme.palette.text.primary}
+            sx={{ lineHeight: 1, textAlign: "right" }}
+          >
+            {formatCurrency(selectedAmount * (selectedInstallment - 1))}
+          </Typography>
+        )}
       </Stack>
     </Box>
   );

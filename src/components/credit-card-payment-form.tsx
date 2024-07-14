@@ -5,7 +5,6 @@ import {
   InputLabel,
   MenuItem,
   Select,
-  SelectChangeEvent,
   useTheme,
 } from "@mui/material";
 import TextField from "@mui/material/TextField";
@@ -18,6 +17,7 @@ import { Controller, useForm } from "react-hook-form";
 import { CpfMask } from "../helper/cpf-mask";
 import { DateMask } from "../helper/date-mask";
 import { CardNumberMask } from "../helper/card-mask";
+import { StorageService } from "../helper/local-storage";
 
 const creditCardPaymentSchema = z.object({
   fullName: z.string({
@@ -45,8 +45,7 @@ type FormCreditCardPaymentForm = z.infer<typeof creditCardPaymentSchema>;
 
 export function CreditCardPaymentForm() {
   const theme = useTheme();
-  const { selectedAmount, selectedInstallment, updateInstallment } =
-    useContext(AmountContext);
+  const { selectedAmount, selectedInstallment } = useContext(AmountContext);
   const [cpfMask, setCpfMask] = useState("");
   const [dateMask, setDateMask] = useState("");
   const [cardNumberMask, setCardNumberMask] = useState("");
@@ -75,9 +74,7 @@ export function CreditCardPaymentForm() {
     setCardNumberMask(CardNumberMask(e.target.value));
   }
 
-  function handleInstallmentChange(event: SelectChangeEvent<number>) {
-    updateInstallment(Number(event.target.value));
-  }
+  console.log(StorageService.getItem("totalDebit"));
 
   return (
     <FormControl

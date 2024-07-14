@@ -8,11 +8,9 @@ import { Tag } from "./tag";
 import { TagPix } from "./tag-pix";
 import { FirstInstallmentWrapper } from "./first-installment-wrapper";
 import { ConfirmationModal } from "./confirmation-modal";
-import { StorageService } from "../helper/local-storage";
 
 export function SelectInstallments() {
   const theme = useTheme();
-  const { setItem, getItem } = StorageService;
 
   const [isConfirmationModalOpen, setIsConfirmationModalOpen] =
     useState<boolean>(false);
@@ -30,14 +28,7 @@ export function SelectInstallments() {
     updateInstallment(numInstallments);
     updateAmount(selectedAmount);
 
-    console.log(numInstallments, selectedAmount);
-
     openConfirmationModal();
-
-    // const sumDebitValues = numInstallments * selectedAmount;
-    // setTotalDebits(sumDebitValues);
-    // setItem("newTotalDebits", sumDebitValues);
-    // updateTotalDebit(totalDebits);
   }
 
   function openConfirmationModal() {

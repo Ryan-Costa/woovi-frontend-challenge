@@ -4,11 +4,14 @@ import { StorageService } from "../helper/local-storage";
 import { HelpOutline } from "@mui/icons-material";
 import { useContext, useState } from "react";
 import { AmountContext } from "../context/amount-provider";
+import { useLocation } from "react-router-dom";
 
 export function TotalAmount() {
   const { getItem } = StorageService;
   const { cetFee } = useContext(AmountContext);
+  const location = useLocation();
   const newTotalDebits = getItem<number>("newTotalDebits");
+  const selectedAmount = getItem<number>("selectedAmount");
   const [helpIsOpen, setHelpIsOpen] = useState(false);
 
   function mouseHoverHelp() {
@@ -72,7 +75,15 @@ export function TotalAmount() {
         </Card>
       )}
       <Typography variant="h2" sx={{ fontWeight: 400 }}>
-        {formatCurrency(CalcCetFee(Number(newTotalDebits), cetFee))}
+        {location.pathname === "/credit"
+          ? formatCurrency(
+              CalcCetFee(
+                Number(newTotalDebits) - Number(selectedAmount),
+                cetFee
+              )
+            )
+          : formatCurrency(Number(newTotalDebits))}
+        {}
       </Typography>
     </Box>
   );
