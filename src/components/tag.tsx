@@ -10,7 +10,7 @@ export function Tag({ text, textBold }: TagProps) {
     <Box
       sx={{
         width: "100%",
-        pl: "1rem",
+        pl: "0.5rem",
         py: 0.7,
         display: "flex",
         flex: 1,

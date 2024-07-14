@@ -147,7 +147,7 @@ export function SelectInstallments() {
 
                 <Tag
                   textBold={`🤑 ${formatCurrency(totalAmount * interestRate)}`}
-                  text="de volta no seu Pix na hora"
+                  text="de volta no Pix na hora"
                 />
               </FirstInstallmentWrapper>
             ) : (
