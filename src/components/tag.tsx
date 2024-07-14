@@ -20,7 +20,7 @@ export function Tag({ text, textBold }: TagProps) {
       }}
     >
       <img
-        src="/src/assets/tag.svg"
+        src="https://iili.io/dBYpQM7.png"
         alt="tag"
         style={{ position: "absolute", zIndex: 0, flex: 1 }}
       />
