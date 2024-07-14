@@ -17,7 +17,6 @@ import { Controller, useForm } from "react-hook-form";
 import { CpfMask } from "../helper/cpf-mask";
 import { DateMask } from "../helper/date-mask";
 import { CardNumberMask } from "../helper/card-mask";
-import { StorageService } from "../helper/local-storage";
 
 const creditCardPaymentSchema = z.object({
   fullName: z.string({
@@ -45,7 +44,8 @@ type FormCreditCardPaymentForm = z.infer<typeof creditCardPaymentSchema>;
 
 export function CreditCardPaymentForm() {
   const theme = useTheme();
-  const { selectedAmount, selectedInstallment } = useContext(AmountContext);
+  const { selectedAmount, selectedInstallment, cetFee } =
+    useContext(AmountContext);
   const [cpfMask, setCpfMask] = useState("");
   const [dateMask, setDateMask] = useState("");
   const [cardNumberMask, setCardNumberMask] = useState("");
@@ -73,8 +73,6 @@ export function CreditCardPaymentForm() {
   function handleCardNumberChange(e: ChangeEvent<HTMLInputElement>) {
     setCardNumberMask(CardNumberMask(e.target.value));
   }
-
-  console.log(StorageService.getItem("totalDebit"));
 
   return (
     <FormControl
@@ -186,10 +184,11 @@ export function CreditCardPaymentForm() {
                 <MenuItem key={index} value={index + 1}>
                   {index + 1}x de{" "}
                   {formatCurrency(
-                    ((selectedInstallment * selectedAmount) / 1 -
+                    (((selectedInstallment * selectedAmount) / 1 -
                       (selectedInstallment * selectedAmount) /
                         selectedInstallment) /
-                      (index + 1)
+                      (index + 1)) *
+                      (1 + cetFee)
                   )}
                 </MenuItem>
               ))}
