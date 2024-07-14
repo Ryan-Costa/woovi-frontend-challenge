@@ -1,26 +1,38 @@
-import { Box, Button, useTheme } from "@mui/material";
-import { useState } from "react";
+import { Box, Button, Stack, Typography, useTheme } from "@mui/material";
+import { useContext, useState } from "react";
 import FileCopyIcon from "@mui/icons-material/FileCopy";
 import { useNavigate } from "react-router-dom";
+import { AmountContext } from "../context/amount-provider";
 
 export function ButtonCopyPixKey() {
   const theme = useTheme();
   const navigate = useNavigate();
   const [copied, setCopied] = useState(false);
+  const [modalConfirmPayment, setModalConfirmPayment] = useState(false);
+  const { selectedInstallment } = useContext(AmountContext);
 
-  function handleCopyy() {
+  function handleCopy() {
     const valueCopy = "Me contrata 💕";
     navigator.clipboard.writeText(valueCopy);
     setCopied(true);
-    setTimeout(() => setCopied(false), 1500);
-    setTimeout(() => navigate("/credit"), 2500);
+
+    setTimeout(() => {
+      setCopied(false);
+      setModalConfirmPayment(true);
+
+      setTimeout(() => {
+        selectedInstallment > 1
+          ? navigate("/credit")
+          : navigate("/payment-made");
+      }, 1500);
+    }, 1000);
   }
 
   return (
     <Box sx={{ mt: "1.25rem" }}>
       <Button
         variant="contained"
-        onClick={handleCopyy}
+        onClick={handleCopy}
         sx={{
           backgroundColor: `${theme.palette.secondary.main} !important`,
           color: theme.palette.common.white,
@@ -46,6 +58,37 @@ export function ButtonCopyPixKey() {
           </>
         )}
       </Button>
+
+      {modalConfirmPayment && (
+        <Stack
+          sx={{
+            position: "fixed",
+            inset: 0,
+            backgroundColor: "rgba(0, 0, 0, 0.6)",
+            backgroundopacity: "0.6",
+            display: "flex",
+            justifyContent: "center",
+            alignItems: "center",
+            zIndex: "modal",
+            px: 2,
+          }}
+        >
+          <Box
+            sx={{
+              width: "100%",
+              maxWidth: "26.5rem",
+              backgroundColor: theme.palette.common.white,
+              padding: "1.25rem",
+              borderRadius: 1,
+              display: "flex",
+              flexDirection: "column",
+              gap: "2.5rem",
+            }}
+          >
+            <Typography>Pagamento realizado</Typography>
+          </Box>
+        </Stack>
+      )}
     </Box>
   );
 }

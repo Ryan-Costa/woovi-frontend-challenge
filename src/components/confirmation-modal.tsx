@@ -1,31 +1,41 @@
-import { Box, Button, Typography, useTheme } from "@mui/material";
+import { Box, Button, Stack, Typography, useTheme } from "@mui/material";
 import { formatCurrency } from "../helper/format-currency";
 import { useNavigate } from "react-router-dom";
+import { useContext, useEffect } from "react";
+import { AmountContext } from "../context/amount-provider";
 
 interface ConfirmationModalProps {
-  selectedInstallment: number;
-  selectedAmount: number;
   setIsConfirmationModalOpen: React.Dispatch<React.SetStateAction<boolean>>;
 }
 export function ConfirmationModal({
-  selectedInstallment,
-  selectedAmount,
   setIsConfirmationModalOpen,
 }: ConfirmationModalProps) {
   const theme = useTheme();
   const navigate = useNavigate();
+  const {
+    selectedAmount,
+    selectedInstallment,
+    updateTotalDebit,
+    addNewPaymentAmount,
+  } = useContext(AmountContext);
+
+  useEffect(() => {
+    document.body.style.overflow = "hidden";
+  }, []);
 
   function handleCancel() {
     setIsConfirmationModalOpen(false);
   }
 
   function handleConfirm() {
+    updateTotalDebit(selectedAmount * selectedInstallment);
+    addNewPaymentAmount("pix", selectedAmount, 1);
     setIsConfirmationModalOpen(false);
     navigate("/pix");
   }
 
   return (
-    <Box
+    <Stack
       sx={{
         position: "fixed",
         inset: 0,
@@ -41,12 +51,13 @@ export function ConfirmationModal({
       <Box
         sx={{
           width: "100%",
+          maxWidth: "26.5rem",
           backgroundColor: theme.palette.common.white,
-          padding: "2rem",
+          padding: "1.25rem",
           borderRadius: 1,
           display: "flex",
           flexDirection: "column",
-          gap: "4rem",
+          gap: "2.5rem",
         }}
       >
         <Box
@@ -55,19 +66,12 @@ export function ConfirmationModal({
             gap: 0.6,
           }}
         >
-          <Typography variant="h2" color="text.primary">
-            Deseja parcelar em
-          </Typography>
-
-          <Typography variant="h2" sx={{ fontWeight: 800 }}>
-            {selectedInstallment}x
-          </Typography>
-
-          <Typography variant="h2" color="text.primary">
-            de
-          </Typography>
-
-          <Typography variant="h2" sx={{ fontWeight: 800 }}>
+          <Typography
+            variant="h2"
+            color="text.primary"
+            sx={{ display: "inline-flex" }}
+          >
+            Deseja parcelar em {selectedInstallment}x de{" "}
             {formatCurrency(selectedAmount)}?
           </Typography>
         </Box>
@@ -84,7 +88,7 @@ export function ConfirmationModal({
             sx={{
               borderColor: theme.palette.secondary.main,
               color: theme.palette.secondary.main,
-              fontSize: "1.4rem",
+              fontSize: "0.875rem",
             }}
             onClick={handleCancel}
           >
@@ -97,7 +101,7 @@ export function ConfirmationModal({
             sx={{
               backgroundColor: theme.palette.secondary.main,
               color: theme.palette.common.white,
-              fontSize: "1.4rem",
+              fontSize: "0.875rem",
               "&:hover": {
                 backgroundColor: theme.palette.secondary.light,
               },
@@ -107,6 +111,6 @@ export function ConfirmationModal({
           </Button>
         </Box>
       </Box>
-    </Box>
+    </Stack>
   );
 }

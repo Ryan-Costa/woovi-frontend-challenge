@@ -6,10 +6,10 @@ export function TagPix({ text }: { text: string }) {
     <Box
       sx={{
         position: "absolute",
-        px: "1.8rem",
-        py: "0.3rem",
+        px: "1.125rem",
+        py: "0.25rem",
         display: "inline-block",
-        transform: "translateY(-3.5rem)",
+        transform: "translateY(-2.75rem)",
         borderRadius: 10,
         backgroundColor: theme.palette.text.disabled,
       }}

@@ -11,56 +11,37 @@ import { ConfirmationModal } from "./confirmation-modal";
 
 export function SelectInstallments() {
   const theme = useTheme();
-  const [isConfirmationModalOpen, setIsConfirmationModalOpen] = useState(false);
+
+  const [isConfirmationModalOpen, setIsConfirmationModalOpen] =
+    useState<boolean>(false);
 
   const {
-    selectedInstallment,
-    selectedAmount,
+    totalAmount,
+    installments,
     updateInstallment,
     updateAmount,
+    selectedInstallment,
+    interestRate,
   } = useContext(AmountContext);
 
-  const totalAmount = 30500;
-
-  const handleRadioChange = (
-    numInstallments: number,
-    selectedAmount: number
-  ) => {
+  function handleRadioChange(numInstallments: number, selectedAmount: number) {
     updateInstallment(numInstallments);
     updateAmount(selectedAmount);
+
     openConfirmationModal();
-  };
+  }
 
   function openConfirmationModal() {
     setIsConfirmationModalOpen(true);
   }
-
-  const calculateInstallment = (total: number, numInstallments: number) => {
-    const monthlyInterestRate = 0.0032786;
-    const totalWithInterest =
-      total * (1 + monthlyInterestRate * numInstallments);
-    const installmentAmount = totalWithInterest / numInstallments;
-    return installmentAmount.toFixed(2);
-  };
-
-  const installments = Array.from({ length: 7 }, (_, index) => {
-    const numInstallments = index + 1;
-    const installmentAmount = calculateInstallment(
-      totalAmount,
-      numInstallments
-    );
-
-    return {
-      amount: parseFloat(installmentAmount),
-      numInstallments,
-    };
-  });
 
   return (
     <>
       <Stack
         sx={{
           width: "100%",
+          maxWidth: "26.5rem",
+          justifyContent: "center",
           flexDirection: "column",
         }}
       >
@@ -166,7 +147,7 @@ export function SelectInstallments() {
                 </Box>
 
                 <Tag
-                  textBold="🤑 R$ 300,00"
+                  textBold={`🤑 ${formatCurrency(totalAmount * interestRate)}`}
                   text="de volta no seu Pix na hora"
                 />
               </FirstInstallmentWrapper>
@@ -219,7 +200,7 @@ export function SelectInstallments() {
                       <Typography variant="h3" color="text.secondary">
                         Total:{" "}
                         {formatCurrency(
-                          installment.numInstallments * installment.amount
+                          installment.amount * installment.numInstallments
                         )}
                       </Typography>
                     </Box>
@@ -260,8 +241,6 @@ export function SelectInstallments() {
 
       {isConfirmationModalOpen && (
         <ConfirmationModal
-          selectedInstallment={selectedInstallment}
-          selectedAmount={selectedAmount}
           setIsConfirmationModalOpen={setIsConfirmationModalOpen}
         />
       )}
