@@ -1,7 +1,5 @@
 import { Divider, Stack } from "@mui/material";
 import { Header } from "../components/header";
-import { useContext } from "react";
-import { AmountContext } from "../context/amount-provider";
 import { PaymentTermTime } from "../components/payment-term-time";
 import { TimeLinePayment } from "../components/timeline-payment";
 import { TotalAmount } from "../components/total-amount";
@@ -10,7 +8,6 @@ import { IdentifierMessage } from "../components/identifier-message";
 import { CreditCardPaymentForm } from "../components/credit-card-payment-form";
 
 export default function Credit() {
-  const { selectedInstallment } = useContext(AmountContext);
   return (
     <Stack
       sx={{
@@ -18,11 +15,7 @@ export default function Credit() {
         alignItems: "center",
       }}
     >
-      <Header
-        title={`João, pague o restante em ${
-          selectedInstallment - 1
-        }x ou mais no cartão`}
-      />
+      <Header title={`João, pague o restante no cartão`} />
       <CreditCardPaymentForm />
 
       <PaymentTermTime />
