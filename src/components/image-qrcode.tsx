@@ -14,7 +14,7 @@ export function ImageQRCode() {
         height: "22.5rem",
       }}
     >
-      <img src="/src/assets/qrcode.png" alt="qrcode" />
+      <img src="https://iili.io/dBaHd41.png" alt="qrcode" />
     </Stack>
   );
 }
