@@ -15,7 +15,7 @@ export function Tag({ text, textBold }: TagProps) {
         width: "100%",
         flex: 1,
         gap: "0.4rem",
-        backgroundImage: "url('/src/assets/tag.svg')",
+        backgroundImage: "url('./src/assets/tag.svg')",
         backgroundSize: "contain",
         backgroundRepeat: "no-repeat",
         backgroundPosition: "center",
