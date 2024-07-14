@@ -10,8 +10,8 @@ export function ImageQRCode() {
         borderColor: theme.palette.primary.main,
         borderRadius: ".5rem",
         padding: ".375rem",
-        width: "22.5rem",
-        height: "22.5rem",
+        width: "20.5rem",
+        height: "20.5rem",
       }}
     >
       <img src="https://iili.io/dBaHd41.png" alt="qrcode" />
