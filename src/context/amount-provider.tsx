@@ -103,8 +103,6 @@ const AmountProvider = ({ children }: { children: React.ReactNode }) => {
     }));
   }
 
-  console.log(paymentInfo);
-
   function addNewPaymentAmount(
     type: string,
     amount: number,

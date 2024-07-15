@@ -64,9 +64,7 @@ export function CreditCardPaymentForm() {
     );
   }, [newInstallmentCardPayment]);
 
-  function onSubmit(data: FormCreditCardPaymentForm) {
-    console.log(data);
-
+  function onSubmit() {
     navigate("/payment-made");
   }
 
