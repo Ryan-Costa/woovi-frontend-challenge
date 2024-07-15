@@ -2,6 +2,10 @@
 
 Este projeto foi desenvolvido como parte do Woovi Frontend Challenge, utilizando React, TypeScript e Vite.
 
+## Link do Desafio
+
+https://woovi-frontend-ryan-dev.vercel.app/
+
 ## Instalação e uso
 
 ```bash
