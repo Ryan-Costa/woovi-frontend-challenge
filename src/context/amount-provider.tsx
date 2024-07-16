@@ -49,9 +49,13 @@ const AmountProvider = ({ children }: { children: React.ReactNode }) => {
     totalAmount: number,
     installments: number
   ): number {
-    const totalWithInterest = totalAmount * (1 + interestRate * installments);
-    const installmentAmount = totalWithInterest / installments;
-    return Number(installmentAmount.toFixed(2));
+    if (installments === 1) {
+      return totalAmount;
+    } else {
+      const totalWithInterest = totalAmount * (1 + interestRate * installments);
+      const installmentAmount = totalWithInterest / installments;
+      return Number(installmentAmount.toFixed(2));
+    }
   }
 
   const installments = Array.from({ length: installmentsQty }, (_, index) => {
