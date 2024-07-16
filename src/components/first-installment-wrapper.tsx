@@ -4,17 +4,21 @@ interface FirstInstallmentWrapperProps {
   selectedInstallment: number;
   installment: { numInstallments: number; amount: number };
   children: React.ReactNode;
+  onClick: () => void;
 }
 export function FirstInstallmentWrapper({
   selectedInstallment,
   installment,
   children,
+  onClick,
 }: FirstInstallmentWrapperProps) {
   const theme = useTheme();
   return (
     <Stack
+      onClick={onClick}
       sx={{
         gap: "0.5rem",
+        cursor: "pointer",
         position: "relative",
         border: 2,
         borderRadius: 2,

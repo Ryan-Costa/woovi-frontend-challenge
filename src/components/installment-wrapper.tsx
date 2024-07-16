@@ -6,19 +6,23 @@ interface InstallmentWrapperProps {
   selectedInstallment: number;
   installmentLength: number;
   children: React.ReactNode;
+  onClick: () => void;
 }
 export function InstallmentWrapper({
   index,
   selectedInstallment,
   installmentLength,
   children,
+  onClick,
 }: InstallmentWrapperProps) {
   const theme = useTheme();
 
   return (
     <Stack
+      onClick={onClick}
       sx={{
         position: "relative",
+        cursor: "pointer",
         alignItems: "start",
         gap: "0.5rem",
         zIndex: 1,

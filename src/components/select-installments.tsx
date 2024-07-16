@@ -50,6 +50,12 @@ export function SelectInstallments() {
               <FirstInstallmentWrapper
                 installment={installment}
                 selectedInstallment={selectedInstallment}
+                onClick={() =>
+                  handleRadioChange(
+                    installment.numInstallments,
+                    installment.amount
+                  )
+                }
               >
                 <TagPix text="Pix" />
 
@@ -124,12 +130,6 @@ export function SelectInstallments() {
                     checked={
                       selectedInstallment === installment.numInstallments
                     }
-                    onChange={() =>
-                      handleRadioChange(
-                        installment.numInstallments,
-                        totalAmount
-                      )
-                    }
                     checkedIcon={
                       <CheckCircleIcon
                         sx={{ color: theme.palette.primary.main }}
@@ -155,6 +155,12 @@ export function SelectInstallments() {
                 index={index}
                 selectedInstallment={selectedInstallment}
                 installmentLength={installments.length}
+                onClick={() =>
+                  handleRadioChange(
+                    installment.numInstallments,
+                    installment.amount
+                  )
+                }
               >
                 {installment.numInstallments === 2 && (
                   <TagPix text="Pix Parcelado" />
@@ -217,12 +223,6 @@ export function SelectInstallments() {
                   <Radio
                     checked={
                       selectedInstallment === installment.numInstallments
-                    }
-                    onChange={() =>
-                      handleRadioChange(
-                        installment.numInstallments,
-                        installment.amount
-                      )
                     }
                     checkedIcon={<CheckCircleIcon />}
                     sx={{
