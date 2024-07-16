@@ -20,9 +20,6 @@ export default function Pix() {
     useContext(AmountContext);
 
   useEffect(() => {
-    document.body.style.overflow = "auto";
-
-    // Recupera os valores armazenados no localStorage e atualiza o estado
     const storedSelectedAmount =
       StorageService.getItem<number>("selectedAmount");
     const storedSelectedInstallment = StorageService.getItem<number>(

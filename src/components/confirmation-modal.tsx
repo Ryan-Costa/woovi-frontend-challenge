@@ -24,10 +24,12 @@ export function ConfirmationModal({
   }, []);
 
   function handleCancel() {
+    document.body.style.overflow = "auto";
     setIsConfirmationModalOpen(false);
   }
 
   function handleConfirm() {
+    document.body.style.overflow = "hidden";
     updateTotalDebit(selectedAmount * selectedInstallment);
     addNewPaymentAmount("pix", selectedAmount, 1);
     setIsConfirmationModalOpen(false);
