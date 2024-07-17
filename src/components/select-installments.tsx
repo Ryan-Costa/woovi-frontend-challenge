@@ -222,7 +222,12 @@ export function SelectInstallments() {
 
                 {installment.numInstallments === 4 && (
                   <Tag
-                    textBold={"best_installment_option_bold"}
+                    textBold={{
+                      key: "best_installment_option_bold",
+                      options: {
+                        amount_back: null,
+                      },
+                    }}
                     text={"best_installment_option"}
                   />
                 )}

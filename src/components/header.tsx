@@ -5,7 +5,7 @@ import { useTranslation } from "react-i18next";
 interface HeaderProps {
   title: {
     key: string;
-    options?: Record<string, unknown>;
+    options?: Record<string, null>;
   };
 }
 

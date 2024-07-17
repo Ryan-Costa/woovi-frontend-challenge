@@ -2,7 +2,10 @@ import { Box, Typography } from "@mui/material";
 import { useTranslation } from "react-i18next";
 
 interface TagProps {
-  textBold: string | { key: string; options?: Record<string, unknown> };
+  textBold: {
+    key: string;
+    options?: Record<string, null>;
+  };
   text: string;
 }
 
