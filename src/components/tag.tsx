@@ -4,7 +4,7 @@ import { useTranslation } from "react-i18next";
 interface TagProps {
   textBold: {
     key: string;
-    options?: Record<string, null>;
+    options?: Record<string, null> | undefined;
   };
   text: string;
 }
