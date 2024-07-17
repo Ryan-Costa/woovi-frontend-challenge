@@ -1,11 +1,18 @@
 import { Box, Typography } from "@mui/material";
+import { useTranslation } from "react-i18next";
 
 interface TagProps {
+  textBold: string | { key: string; options?: Record<string, unknown> };
   text: string;
-  textBold: string;
 }
 
 export function Tag({ text, textBold }: TagProps) {
+  const { t } = useTranslation();
+  const formattedTextBold =
+    typeof textBold === "object"
+      ? t(textBold.key, textBold.options)
+      : t(textBold);
+
   return (
     <Box
       sx={{
@@ -42,7 +49,7 @@ export function Tag({ text, textBold }: TagProps) {
             zIndex: 1,
           }}
         >
-          {textBold}
+          {formattedTextBold}
         </Typography>
         <Typography
           variant="h3"
@@ -58,7 +65,7 @@ export function Tag({ text, textBold }: TagProps) {
             zIndex: 1,
           }}
         >
-          {text}
+          {t(text)}
         </Typography>
       </Box>
     </Box>

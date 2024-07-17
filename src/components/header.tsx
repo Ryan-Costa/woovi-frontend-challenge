@@ -1,10 +1,17 @@
 import { Stack, Typography } from "@mui/material";
 import WooviLogo from "../assets/woovi.svg";
+import { useTranslation } from "react-i18next";
 
 interface HeaderProps {
-  title: string;
+  title: {
+    key: string;
+    options?: Record<string, unknown>;
+  };
 }
+
 export function Header({ title }: HeaderProps) {
+  const { t } = useTranslation();
+
   return (
     <Stack
       sx={{
@@ -26,7 +33,7 @@ export function Header({ title }: HeaderProps) {
           lineHeight: "normal",
         }}
       >
-        {title}
+        {t(title.key, title.options)}
       </Typography>
     </Stack>
   );

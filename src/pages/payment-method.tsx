@@ -8,11 +8,17 @@ export default function PaymentMethod() {
     <Stack
       sx={{
         flex: 1,
-        maxWidth: "26.5rem",
         width: "100%",
       }}
     >
-      <Header title="Ryan, como você quer pagar?" />
+      <Header
+        title={{
+          key: "header_payment_method_page",
+          options: {
+            amount: null,
+          },
+        }}
+      />
 
       <SelectInstallments />
     </Stack>

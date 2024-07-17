@@ -32,31 +32,18 @@ interface PaymentInfoProps {
 const AmountContext = createContext<AmountContextType>({} as AmountContextType);
 
 const AmountProvider = ({ children }: { children: React.ReactNode }) => {
+  const installmentsQty = 7;
+  const interestRate = 0.03;
+  const cetFee = 0.005;
+
   const [totalAmount, setTotalAmount] = useState<number>(() => {
     const storedAmount = StorageService.getItem<number>("totalAmount");
     return storedAmount ? storedAmount : 0;
   });
 
-  const installmentsQty = 7;
-  const interestRate = 0.03;
-  const cetFee = 0.005;
-
   useEffect(() => {
     StorageService.setItem("totalAmount", totalAmount);
   }, [totalAmount]);
-
-  function calculateInstallmentRate(
-    totalAmount: number,
-    installments: number
-  ): number {
-    if (installments === 1) {
-      return totalAmount;
-    } else {
-      const totalWithInterest = totalAmount * (1 + interestRate * installments);
-      const installmentAmount = totalWithInterest / installments;
-      return Number(installmentAmount.toFixed(2));
-    }
-  }
 
   const installments = Array.from({ length: installmentsQty }, (_, index) => {
     const numInstallments = index + 1;
@@ -87,6 +74,25 @@ const AmountProvider = ({ children }: { children: React.ReactNode }) => {
     const savedNewDebit = StorageService.getItem<number>("newTotalDebits");
     return savedNewDebit ? savedNewDebit : 0;
   });
+
+  function calculateInstallmentRate(
+    totalAmount: number,
+    installments: number
+  ): number {
+    if (installments === 1) {
+      return totalAmount;
+    } else if (installments === 4) {
+      const totalWithInterest = totalAmount * (1 + interestRate * installments);
+      const installmentAmount = totalWithInterest / installments;
+      const installmentWithDiscount =
+        installmentAmount - installmentAmount * interestRate;
+      return Number(installmentWithDiscount.toFixed(2));
+    } else {
+      const totalWithInterest = totalAmount * (1 + interestRate * installments);
+      const installmentAmount = totalWithInterest / installments;
+      return Number(installmentAmount.toFixed(2));
+    }
+  }
 
   function updateAmount(newAmountSelected: number) {
     StorageService.setItem("selectedAmount", newAmountSelected);

@@ -5,9 +5,11 @@ import { formatCurrency } from "../helper/format-currency";
 import { CalcCetFee } from "../helper/calc-cet-fee";
 import { useContext } from "react";
 import { AmountContext } from "../context/amount-provider";
+import { useTranslation } from "react-i18next";
 
 export function PaymentMade() {
   const theme = useTheme();
+  const { t } = useTranslation();
   const { cetFee } = useContext(AmountContext);
 
   const selectedAmount = StorageService.getItem("selectedAmount");
@@ -41,16 +43,28 @@ export function PaymentMade() {
           variant="h1"
           sx={{ color: theme.palette.text.primary, textAlign: "center" }}
         >
-          {selectedInstallment === 1
-            ? `Pagamento de ${formatCurrency(
-                Number(newTotalDebits)
-              )} realizado no pix`
-            : `Pagamento realizado em ${`${newInstallmentCardPayment} x de`} ${formatCurrency(
-                CalcCetFee(
-                  Number(newTotalDebits) - Number(selectedAmount),
-                  cetFee
-                ) / Number(newInstallmentCardPayment)
-              )} no crédito `}
+          {
+            selectedInstallment === 1
+              ? t("payment_made_modal_text", {
+                  amount: formatCurrency(Number(newTotalDebits)),
+                })
+              : t("payment_made_credit_text", {
+                  installments: newInstallmentCardPayment,
+                  amount: formatCurrency(
+                    CalcCetFee(
+                      Number(newTotalDebits) - Number(selectedAmount),
+                      cetFee
+                    ) / Number(newInstallmentCardPayment)
+                  ),
+                })
+
+            // `Pagamento realizado em ${`${newInstallmentCardPayment}x de`} ${formatCurrency(
+            //     CalcCetFee(
+            //       Number(newTotalDebits) - Number(selectedAmount),
+            //       cetFee
+            //     ) / Number(newInstallmentCardPayment)
+            //   )} no crédito `
+          }
         </Typography>
       </Box>
     </Stack>

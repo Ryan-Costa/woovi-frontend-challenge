@@ -1,7 +1,9 @@
 import { Stack, Typography, useTheme } from "@mui/material";
+import { useTranslation } from "react-i18next";
 
 export function IdentifierMessage() {
   const theme = useTheme();
+  const { t } = useTranslation();
 
   return (
     <Stack sx={{ mt: "1.25rem", mb: "1.25rem", alignItems: "center" }}>
@@ -10,7 +12,7 @@ export function IdentifierMessage() {
         color={theme.palette.info.main}
         sx={{ fontWeight: 500 }}
       >
-        Identificador
+        {t("identifier")}
       </Typography>
       <Typography
         variant="h3"

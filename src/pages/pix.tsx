@@ -43,9 +43,12 @@ export default function Pix() {
       }}
     >
       <Header
-        title={`Ryan, pague a entrada de ${formatCurrency(
-          selectedAmount
-        )} pelo Pix`}
+        title={{
+          key: "header_pix_page",
+          options: {
+            amount: formatCurrency(selectedAmount),
+          },
+        }}
       />
 
       <ImageQRCode />

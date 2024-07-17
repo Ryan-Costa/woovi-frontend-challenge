@@ -8,9 +8,11 @@ import { Tag } from "./tag";
 import { TagPix } from "./tag-pix";
 import { FirstInstallmentWrapper } from "./first-installment-wrapper";
 import { ConfirmationModal } from "./confirmation-modal";
+import { useTranslation } from "react-i18next";
 
 export function SelectInstallments() {
   const theme = useTheme();
+  const { t } = useTranslation();
 
   const [isConfirmationModalOpen, setIsConfirmationModalOpen] =
     useState<boolean>(false);
@@ -103,25 +105,7 @@ export function SelectInstallments() {
                           fontWeight: 600,
                         }}
                       >
-                        Ganhe
-                      </Typography>
-                      <Typography
-                        variant="h3"
-                        color="primary.main"
-                        sx={{
-                          fontWeight: 800,
-                        }}
-                      >
-                        3%
-                      </Typography>
-                      <Typography
-                        variant="h3"
-                        color="primary.main"
-                        sx={{
-                          fontWeight: 600,
-                        }}
-                      >
-                        de Cashback
+                        {t("cashback")}
                       </Typography>
                     </Box>
                   </Box>
@@ -146,8 +130,13 @@ export function SelectInstallments() {
                 </Box>
 
                 <Tag
-                  textBold={`🤑 ${formatCurrency(totalAmount * interestRate)}`}
-                  text="de volta no Pix na hora"
+                  textBold={{
+                    key: "amount_back_on_pix_value",
+                    options: {
+                      amount_back: formatCurrency(totalAmount * interestRate),
+                    },
+                  }}
+                  text={"amount_back_on_pix"}
                 />
               </FirstInstallmentWrapper>
             ) : (
@@ -163,7 +152,7 @@ export function SelectInstallments() {
                 }
               >
                 {installment.numInstallments === 2 && (
-                  <TagPix text="Pix Parcelado" />
+                  <TagPix text={"pix_installments"} />
                 )}
                 <Box
                   sx={{
@@ -192,11 +181,7 @@ export function SelectInstallments() {
                           fontWeight: 600,
                         }}
                       >
-                        {installment.numInstallments === 4
-                          ? formatCurrency(
-                              installment.amount - installment.amount * 0.03
-                            )
-                          : formatCurrency(installment.amount)}
+                        {formatCurrency(installment.amount)}
                       </Typography>
                     </Box>
 
@@ -237,8 +222,8 @@ export function SelectInstallments() {
 
                 {installment.numInstallments === 4 && (
                   <Tag
-                    textBold="-3% de juros:"
-                    text="Melhor opção de parcelamento"
+                    textBold={"best_installment_option_bold"}
+                    text={"best_installment_option"}
                   />
                 )}
               </InstallmentWrapper>

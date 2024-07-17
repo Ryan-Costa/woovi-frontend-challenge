@@ -1,7 +1,10 @@
 import { Box, Typography, useTheme } from "@mui/material";
+import { useTranslation } from "react-i18next";
 
 export function TagPix({ text }: { text: string }) {
   const theme = useTheme();
+  const { t } = useTranslation();
+
   return (
     <Box
       sx={{
@@ -15,7 +18,7 @@ export function TagPix({ text }: { text: string }) {
       }}
     >
       <Typography variant="h2" color="text.primary">
-        {text}
+        {t(text)}
       </Typography>
     </Box>
   );

@@ -4,10 +4,12 @@ import FileCopyIcon from "@mui/icons-material/FileCopy";
 import { useNavigate } from "react-router-dom";
 import { AmountContext } from "../context/amount-provider";
 import { PaymentMadeModalPix } from "./payment-made-modal-pix";
+import { useTranslation } from "react-i18next";
 
 export function ButtonCopyPixKey() {
   const theme = useTheme();
   const navigate = useNavigate();
+  const { t } = useTranslation();
   const [copied, setCopied] = useState(false);
   const [modalConfirmPayment, setModalConfirmPayment] = useState(false);
   const { selectedInstallment } = useContext(AmountContext);
@@ -49,10 +51,10 @@ export function ButtonCopyPixKey() {
         }}
       >
         {copied ? (
-          "Texto Copiado!"
+          t("feedback_text_copied")
         ) : (
           <>
-            Clique para copiar o QR CODE
+            {t("click_copy_qrcode")}
             <FileCopyIcon
               sx={{ color: theme.palette.common.white, fontSize: 20 }}
             />

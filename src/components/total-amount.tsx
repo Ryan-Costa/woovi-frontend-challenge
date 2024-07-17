@@ -6,11 +6,13 @@ import { useContext, useState } from "react";
 import { AmountContext } from "../context/amount-provider";
 import { useLocation } from "react-router-dom";
 import { CalcCetFee } from "../helper/calc-cet-fee";
+import { useTranslation } from "react-i18next";
 
 export function TotalAmount() {
   const { getItem } = StorageService;
-  const { cetFee } = useContext(AmountContext);
   const location = useLocation();
+  const { t } = useTranslation();
+  const { cetFee } = useContext(AmountContext);
   const newTotalDebits = getItem<number>("newTotalDebits");
   const selectedAmount = getItem<number>("selectedAmount");
   const [helpIsOpen, setHelpIsOpen] = useState(false);
@@ -57,16 +59,9 @@ export function TotalAmount() {
             sx={{ display: "flex", flexDirection: "column", gap: "1rem" }}
           >
             <Typography variant="h4" component="div">
-              A Taxa de Custo Efetivo Total (CET) representa o custo total de um
-              financiamento, incluindo juros, seguros, tarifas e demais
-              encargos.
+              {t("about_cet")}
             </Typography>
-            <Typography variant="h4">
-              Ela foi adicionada ao valor final do financiamento para
-              proporcionar uma visão clara e transparente de todos os custos
-              envolvidos, permitindo que você tome decisões informadas sobre
-              suas opções de crédito.
-            </Typography>
+            <Typography variant="h4">{t("why_was_cet_applied")}</Typography>
           </CardContent>
         </Card>
       )}

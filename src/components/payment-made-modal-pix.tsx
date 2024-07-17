@@ -2,9 +2,11 @@ import { Stack, Box, Typography, useTheme } from "@mui/material";
 import CheckCircleIcon from "@mui/icons-material/CheckCircle";
 import { StorageService } from "../helper/local-storage";
 import { formatCurrency } from "../helper/format-currency";
+import { useTranslation } from "react-i18next";
 
 export function PaymentMadeModalPix() {
   const theme = useTheme();
+  const { t } = useTranslation();
   const totalAmountPaymedPix = StorageService.getItem("selectedAmount")
     ? StorageService.getItem("selectedAmount")
     : StorageService.getItem("totalAmount");
@@ -44,9 +46,9 @@ export function PaymentMadeModalPix() {
           variant="h1"
           sx={{ color: theme.palette.text.primary, textAlign: "center" }}
         >
-          {`Pagamento de ${formatCurrency(
-            Number(totalAmountPaymedPix)
-          )} realizado no pix `}
+          {t("payment_made_modal_text", {
+            amount: formatCurrency(Number(totalAmountPaymedPix)),
+          })}
         </Typography>
       </Box>
     </Stack>

@@ -4,9 +4,11 @@ import { formatTime } from "../helper/format-time";
 import { calculateEndTime } from "../helper/calculate-end-time";
 import { LinearProgress, Stack, Typography, useTheme } from "@mui/material";
 import { calculateProgress } from "../helper/calculate-progress";
+import { useTranslation } from "react-i18next";
 
 export function PaymentTermTime() {
   const theme = useTheme();
+  const { t } = useTranslation();
   const [timeLeft, setTimeLeft] = useState(300);
   const [endTime] = useState(calculateEndTime());
 
@@ -33,7 +35,7 @@ export function PaymentTermTime() {
         color={theme.palette.info.main}
         sx={{ fontWeight: 400 }}
       >
-        Prazo de pagamento
+        {t("payment_term_text")}
       </Typography>
       <Typography variant="h3" color={theme.palette.text.primary}>
         {formatEndTime(endTime)} - {formatTime(timeLeft)}

@@ -20,26 +20,19 @@ import { DateMask } from "../helper/date-mask";
 import { CardNumberMask } from "../helper/card-mask";
 import { StorageService } from "../helper/local-storage";
 import { useNavigate } from "react-router-dom";
-
-const creditCardPaymentSchema = z.object({
-  fullName: z.string().min(2, "Nome muito curto"),
-  cpf: z.string().min(14, "CPF é obrigatório"),
-  cardNumber: z.string().min(19, "Número do cartão inválido"),
-  expirationDate: z.string().min(7, "Data de vencimento é obrigatória"),
-  cvv: z.string().min(3, "CVV inválido"),
-  installment: z.string(),
-});
-
-type FormCreditCardPaymentForm = z.infer<typeof creditCardPaymentSchema>;
+import { useTranslation } from "react-i18next";
+import { useCreditCardPaymentSchema } from "../functions/useCreditCardPaymentSchema";
 
 export function CreditCardPaymentForm() {
   const theme = useTheme();
   const navigate = useNavigate();
+  const { t } = useTranslation();
   const { selectedAmount, selectedInstallment, cetFee } =
     useContext(AmountContext);
   const [cpfMask, setCpfMask] = useState("");
   const [dateMask, setDateMask] = useState("");
   const [cardNumberMask, setCardNumberMask] = useState("");
+
   const [newInstallmentCardPayment, setNewInstallmentCardPayment] = useState(
     () => {
       const hasNewInstallmentCardPayment = StorageService.getItem<number>(
@@ -48,6 +41,10 @@ export function CreditCardPaymentForm() {
       return hasNewInstallmentCardPayment ? hasNewInstallmentCardPayment : 1;
     }
   );
+
+  const creditCardPaymentSchema = useCreditCardPaymentSchema();
+
+  type FormCreditCardPaymentForm = z.infer<typeof creditCardPaymentSchema>;
 
   const {
     register,
@@ -94,7 +91,7 @@ export function CreditCardPaymentForm() {
     >
       <TextField
         {...register("fullName")}
-        label="Nome completo"
+        label={t("label_form_complete_name")}
         variant="outlined"
         error={!!errors.fullName}
         helperText={errors.fullName?.message}
@@ -113,7 +110,7 @@ export function CreditCardPaymentForm() {
 
       <TextField
         {...register("cardNumber")}
-        label="Número do cartão"
+        label={t("label_form_card_number")}
         variant="outlined"
         onChange={handleCardNumberChange}
         value={cardNumberMask}
@@ -131,7 +128,7 @@ export function CreditCardPaymentForm() {
       >
         <TextField
           {...register("expirationDate")}
-          label="Vencimento"
+          label={t("label_form_expiration_date")}
           variant="outlined"
           onChange={handleDateChange}
           value={dateMask}
@@ -150,26 +147,28 @@ export function CreditCardPaymentForm() {
       </Box>
 
       <FormControl>
-        <InputLabel id="installment">Parcelas</InputLabel>
+        <InputLabel id="installment">{t("label_form_installments")}</InputLabel>
 
         <Select
           {...register("installment")}
           id="installment"
-          label="Parcelas"
+          label={t("label_form_installments")}
           value={newInstallmentCardPayment}
           error={!!errors.installment}
           onChange={handleChangeNewInstallment}
         >
           {Array.from({ length: 12 }).map((_, index) => (
             <MenuItem key={index} value={index + 1}>
-              {index + 1}x de{" "}
-              {formatCurrency(
-                (((selectedInstallment * selectedAmount) / 1 -
-                  (selectedInstallment * selectedAmount) /
-                    selectedInstallment) /
-                  (index + 1)) *
-                  (1 + cetFee)
-              )}
+              {t("label_form_select_installment", {
+                installment: index + 1,
+                amount: formatCurrency(
+                  (((selectedInstallment * selectedAmount) / 1 -
+                    (selectedInstallment * selectedAmount) /
+                      selectedInstallment) /
+                    (index + 1)) *
+                    (1 + cetFee)
+                ),
+              })}
             </MenuItem>
           ))}
         </Select>
@@ -185,7 +184,7 @@ export function CreditCardPaymentForm() {
           borderRadius: "8px",
         }}
       >
-        Pagar
+        {t("button_form_submit")}
       </Button>
     </FormControl>
   );

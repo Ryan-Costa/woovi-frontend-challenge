@@ -8,9 +8,11 @@ import {
   useTheme,
 } from "@mui/material";
 import { useState } from "react";
+import { useTranslation } from "react-i18next";
 
 export function HowItWorks() {
   const theme = useTheme();
+  const { t } = useTranslation();
   const [expandedSessionHowWorkds, setExpandedSessionHowWorkds] =
     useState(false);
 
@@ -27,7 +29,7 @@ export function HowItWorks() {
           alignItems: "center",
         }}
       >
-        <Typography variant="h2">Como funciona?</Typography>
+        <Typography variant="h2">{t("how_it_works")}</Typography>
         <ChevronLeftRounded
           sx={{
             fontSize: 28,
@@ -41,7 +43,7 @@ export function HowItWorks() {
         {expandedSessionHowWorkds && (
           <Stack sx={{ mt: "1.25rem" }}>
             <Typography variant="h3" sx={{ mb: "0.625rem" }}>
-              O pagamento com Pix usando o link do QR Code é simples:
+              {t("simple_pix_payment_description")}
             </Typography>
             <Stack sx={{ gap: 1, alignItems: "flex-start" }}>
               <Stack direction="row" alignItems="center" gap={1}>
@@ -54,7 +56,7 @@ export function HowItWorks() {
                   />
                 </ListItemIcon>
                 <Typography variant="h4">
-                  Copie o link do QR Code fornecido.
+                  {t("copy_qr_code_instruction")}
                 </Typography>
               </Stack>
               <Stack direction="row" alignItems="center" gap={1}>
@@ -67,7 +69,7 @@ export function HowItWorks() {
                   />
                 </ListItemIcon>
                 <Typography variant="h4">
-                  Abra o aplicativo do seu banco e vá para a seção Pix.
+                  {t("open_bank_app_instruction")}
                 </Typography>
               </Stack>
               <Stack direction="row" alignItems="center" gap={1}>
@@ -80,7 +82,7 @@ export function HowItWorks() {
                   />
                 </ListItemIcon>
                 <Typography variant="h4">
-                  Cole o link na opção apropriada.
+                  {t("paste_link_instruction")}
                 </Typography>
               </Stack>
               <Stack direction="row" alignItems="center" gap={1}>
@@ -93,7 +95,7 @@ export function HowItWorks() {
                   />
                 </ListItemIcon>
                 <Typography variant="h4">
-                  Confirme os detalhes e finalize o pagamento.
+                  {t("confirm_payment_instruction")}
                 </Typography>
               </Stack>
             </Stack>

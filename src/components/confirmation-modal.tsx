@@ -3,6 +3,7 @@ import { formatCurrency } from "../helper/format-currency";
 import { useNavigate } from "react-router-dom";
 import { useContext, useEffect } from "react";
 import { AmountContext } from "../context/amount-provider";
+import { useTranslation } from "react-i18next";
 
 interface ConfirmationModalProps {
   setIsConfirmationModalOpen: React.Dispatch<React.SetStateAction<boolean>>;
@@ -12,6 +13,7 @@ export function ConfirmationModal({
 }: ConfirmationModalProps) {
   const theme = useTheme();
   const navigate = useNavigate();
+  const { t } = useTranslation();
   const {
     selectedAmount,
     selectedInstallment,
@@ -73,8 +75,10 @@ export function ConfirmationModal({
             color="text.primary"
             sx={{ display: "inline-flex" }}
           >
-            Deseja parcelar em {selectedInstallment}x de{" "}
-            {formatCurrency(selectedAmount)}?
+            {t("modal_confirmation_text", {
+              installment: selectedInstallment,
+              amount: formatCurrency(selectedAmount),
+            })}
           </Typography>
         </Box>
         <Box
@@ -94,7 +98,7 @@ export function ConfirmationModal({
             }}
             onClick={handleCancel}
           >
-            Cancelar
+            {t("modal_cancel_button")}
           </Button>
           <Button
             onClick={handleConfirm}
@@ -109,7 +113,7 @@ export function ConfirmationModal({
               },
             }}
           >
-            Confirmar
+            {t("modal_confirm_button")}
           </Button>
         </Box>
       </Box>

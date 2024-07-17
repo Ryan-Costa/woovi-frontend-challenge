@@ -7,10 +7,12 @@ import { AmountContext } from "../context/amount-provider";
 import { useLocation } from "react-router-dom";
 import { StorageService } from "../helper/local-storage";
 import { CalcCetFee } from "../helper/calc-cet-fee";
+import { useTranslation } from "react-i18next";
 
 export function TimeLinePayment() {
   const theme = useTheme();
   const location = useLocation();
+  const { t } = useTranslation();
   const { selectedAmount, selectedInstallment, cetFee } =
     useContext(AmountContext);
   const [newInstallmentSelected, setNewInstallmentSelected] = useState(
@@ -31,19 +33,26 @@ export function TimeLinePayment() {
     };
   }, []);
 
-  const hasNewInstallmentCardPaymentAvailable = `${newInstallmentSelected}x de ${
-    newInstallmentSelected
-      ? formatCurrency(
-          CalcCetFee(
-            (selectedAmount * (selectedInstallment - 1)) /
-              newInstallmentSelected,
-            cetFee
-          )
-        )
-      : formatCurrency(
-          CalcCetFee(selectedAmount * (selectedInstallment - 1), cetFee)
-        )
-  }`;
+  const amountWithCetRateWithoutDividing = formatCurrency(
+    CalcCetFee(
+      (selectedAmount * (selectedInstallment - 1)) / newInstallmentSelected,
+      cetFee
+    )
+  );
+  const amountWithDividedCetRate = formatCurrency(
+    CalcCetFee(selectedAmount * (selectedInstallment - 1), cetFee)
+  );
+  const hasNewInstallmentSelected = newInstallmentSelected
+    ? amountWithCetRateWithoutDividing
+    : amountWithDividedCetRate;
+
+  const hasNewInstallmentCardPaymentAvailable = t(
+    "label_form_select_installment",
+    {
+      installment: newInstallmentSelected,
+      amount: hasNewInstallmentSelected,
+    }
+  );
 
   return (
     <Box
@@ -102,11 +111,11 @@ export function TimeLinePayment() {
           </Stack>
           <Stack sx={{ ml: "0.625rem", justifyContent: "space-between" }}>
             <Typography variant="h3" color={theme.palette.text.primary}>
-              À vista no Pix
+              {t("at_once_pix")}
             </Typography>
             {selectedInstallment > 1 && (
               <Typography variant="h3" color={theme.palette.text.primary}>
-                Restante no cartão
+                {t("remaining_on_card")}
               </Typography>
             )}
           </Stack>
