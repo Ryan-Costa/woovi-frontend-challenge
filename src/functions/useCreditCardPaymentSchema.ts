@@ -12,6 +12,6 @@ export function useCreditCardPaymentSchema() {
       .string()
       .min(7, { message: t("validation_expiration_date") }),
     cvv: z.string().min(3, { message: t("validation_cvv") }),
-    installment: z.string(),
+    installment: z.number(),
   });
 }
