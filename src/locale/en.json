@@ -1,5 +1,6 @@
 {
     "translation": {
+        "header_root_page": "Ryan, how much do you want to pay?",
         "header_payment_method_page": "Ryan, how do you want to pay?",
         "header_pix_page": "Ryan, pay {{ amount }} entry with Pix",
         "header_credit_page": "Ryan, pay the rest on the card",
@@ -30,12 +31,14 @@
         "identifier": "identifier",
         "payment_made_modal_text": "Payment of {{ amount }} made on Pix.",
         "payment_made_credit_text": "Payment made in {{ installments }}x of {{ amount }} on credit",
-        "label_form_complete_name": "Complete name",
+        "field_amount_root_page": "Type the value",
+        "label_form_complete_name": "Full name",
         "label_form_card_number": "Card number",
         "label_form_expiration_date": "Expiration date",
         "label_form_installments": "Installments",
         "label_form_select_installment": "{{ installment }}x of {{ amount }}",
         "button_form_submit": "Pay",
+        "validation_amount_root_page": "Type a number",
         "validation_fullName": "Name is required",
         "validation_cpf": "CPF is required",
         "validation_card_number": "Invalid card number",

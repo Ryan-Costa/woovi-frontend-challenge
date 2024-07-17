@@ -12,18 +12,19 @@ import NavigationOutlinedIcon from "@mui/icons-material/NavigationOutlined";
 import { z } from "zod";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-
-const inputAmountSchema = z.object({
-  amount: z.string().min(1, "Digite um número").max(13),
-});
-
-type InputAmountPropsSchama = z.infer<typeof inputAmountSchema>;
+import { useTranslation } from "react-i18next";
+import { useInputAmountSchema } from "../functions/useInputAmountSchema";
 
 export function InputSelectAmount() {
   const theme = useTheme();
+  const { t } = useTranslation();
   const [inputValue, setInputValue] = useState("");
   const { setTotalAmount } = useContext(AmountContext);
   const navigate = useNavigate();
+
+  const inputAmountSchema = useInputAmountSchema();
+
+  type InputAmountPropsSchama = z.infer<typeof inputAmountSchema>;
 
   const {
     register,
@@ -83,7 +84,7 @@ export function InputSelectAmount() {
       >
         <TextField
           {...register("amount")}
-          label="Digite o valor"
+          label={t("field_amount_root_page")}
           variant="outlined"
           value={inputValue}
           onChange={handleChange}

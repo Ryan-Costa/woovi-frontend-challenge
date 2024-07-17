@@ -1,5 +1,6 @@
 {
     "translation": {
+        "header_root_page": "Ryan, quanto você deseja pagar?",
         "header_payment_method_page": "Ryan, como você quer pagar?",
         "header_pix_page": "Ryan, pague a entrada de {{ amount }} pelo Pix",
         "header_credit_page": "Ryan, pague o restante no cartão",
@@ -30,12 +31,14 @@
         "identifier": "identificador",
         "payment_made_modal_text": "Pagamento de {{ amount }} realizado no Pix",
         "payment_made_credit_text": "Pagamento realizado em {{ installments }}x de {{ amount }} no crédito",
+        "field_amount_root_page": "Digite o valor",
         "label_form_complete_name": "Nome completo",
         "label_form_card_number": "Número do cartão",
         "label_form_expiration_date": "Vencimento",
         "label_form_installments": "Parcelas",
         "label_form_select_installment": "{{ installment }}x de {{ amount }}",
         "button_form_submit": "Pagar",
+        "validation_amount_root_page": "Digite um número",
         "validation_fullName": "Nome é obrigatório",
         "validation_cpf": "CPF é obrigatório",
         "validation_card_number": "Número do cartão inválido",

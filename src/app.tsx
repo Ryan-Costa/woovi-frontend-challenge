@@ -6,7 +6,14 @@ import { InputSelectAmount } from "./components/input-select-amount";
 function App() {
   return (
     <Stack>
-      <Header title={`Ryan, quanto você deseja pagar?`} />
+      <Header
+        title={{
+          key: "header_root_page",
+          options: {
+            amount: null,
+          },
+        }}
+      />
 
       <InputSelectAmount />
     </Stack>
