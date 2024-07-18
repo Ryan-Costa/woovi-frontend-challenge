@@ -22,11 +22,14 @@ npm run dev
 ![image](https://github.com/user-attachments/assets/4ec821da-1e6b-4ed8-a426-5c9c88edec79) ![image](https://github.com/user-attachments/assets/e250d61c-da96-42f5-bb92-43792663f175) ![image](https://github.com/user-attachments/assets/d905e161-8268-4896-8eb7-ec4081c00a6d) ![image](https://github.com/user-attachments/assets/1835a223-1156-42bc-ac27-fda63fd347a5)
 
 
+## Funcionalidades
 
+Funcionalidades inseridas no projeto além do escopo inicial
 
-
-
-
+- Modal de confirmação
+- Tela para inserir valor
+- Temporizador de pagamento
+- Troca de idioma entre "pt" e "en"
 
 ## Dependências
 
